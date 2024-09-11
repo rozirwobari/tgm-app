@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class QcAirBotol extends Model
+class QcAirBotolModel extends Model
 {
     protected $table            = 'qc_air_botol';
     protected $primaryKey       = 'id';

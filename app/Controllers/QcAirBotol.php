@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\AuthModel;
+use App\Models\QcAirBotolModel;
 
 class QcAirBotol extends BaseController
 {
@@ -13,12 +14,12 @@ class QcAirBotol extends BaseController
         $this->session = \Config\Services::session();
         $this->validation = \Config\Services::validation();
         $this->AuthModel = new AuthModel();
-        $this->QCModel = new QcAirBotol();
-        $this->session = \Config\Services::session();
+        $this->QCModel = new QcAirBotolModel();
     }
 
     public function getLabelTime()
     {
+        date_default_timezone_set('Asia/Jakarta');
         $tanggal = date('d');
         $bulan = date('F');
         $tahun = date('Y');
@@ -52,10 +53,10 @@ class QcAirBotol extends BaseController
                 'title' => 'Permission Denied',
             ]);
         }
-
         $data = [
             'title' => 'QC Air Botol',
         ];
+        $data['qc_air_botol'] = $this->QCModel->orderBy('id', 'DESC')->findAll();
         return view('dashboard/AirBotol/qc_air_botol', $data);
     }
 
@@ -132,24 +133,24 @@ class QcAirBotol extends BaseController
             return redirect()->back()->withInput()->with('input', $this->validation->getErrors());
         }
 
-        // $input = [];
-        // for ($i=1; $i <= 5; $i++) { 
-        //     $input[] = [
-        //         'tds' => $this->request->getVar('tds_input_'.$i),
-        //         'ph' => $this->request->getVar('ph_input_'.$i),
-        //         'keruhan' => $this->request->getVar('keruhan_input_'.$i),
-        //     ];
-        // };
-        // $data = [
-        //     'user_id' => $this->session->get('id'),
-        //     'data' => json_encode($input),
-        //     'date' => [
-        //         'timestamps' => time(),
-        //         'label' => $this->getLabelTime(),
-        //     ],
-        //     'type' => "fisikokimia",
-        // ];
-        // $this->QCModel->insert($data);
+        $input = [];
+        for ($i=1; $i <= 5; $i++) { 
+            $input[] = [
+                'tds' => $this->request->getVar('tds_input_'.$i),
+                'ph' => $this->request->getVar('ph_input_'.$i),
+                'keruhan' => $this->request->getVar('keruhan_input_'.$i),
+            ];
+        };
+        $data = [
+            'user_id' => $this->session->get('id'),
+            'data' => json_encode($input),
+            'date' => json_encode([
+                'timestamps' => time(),
+                'label' => $this->getLabelTime(),
+            ]),
+            'type' => "fisikokimia",
+        ];
+        $this->QCModel->insert($data);
 
         return redirect()->to('/dashboard/qc_air_botol/organoleptik')->with('alert', [
             'type' => 'success',

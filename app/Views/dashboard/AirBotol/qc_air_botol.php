@@ -32,45 +32,17 @@
     </div>
 </div>
 <div class="mt-3 overflow-auto" style="max-height: 70vh; scrollbar-width: none;">
+    <?php foreach ($qc_air_botol as $value) : ?>
     <div class="rzw-box-content text-start">
         <a href="<?= base_url('/dashboard/qc_air_botol/fisikokimia') ?>">
             <div class="card-body">
-                <h5 class="pt-2 fw-bold">Fisiko Kimia</h5>
+                <h5 class="pt-2 fw-bold"><?= json_decode($value['date'])->label ?> [<?= strtoupper($value['type']) ?>]</h5>
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus voluptate velit sunt quod ducimus!
                     A ipsa nobis, excepturi quis labore modi alias laborum quae inventore praesentium similique est
                     reiciendis obcaecati!</p>
             </div>
         </a>
     </div>
-    <div class="rzw-box-content text-start">
-        <a href="<?= base_url('/dashboard/qc_air_botol/fisikokimia') ?>">
-            <div class="card-body">
-                <h5 class="pt-2 fw-bold">Fisiko Kimia</h5>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus voluptate velit sunt quod ducimus!
-                    A ipsa nobis, excepturi quis labore modi alias laborum quae inventore praesentium similique est
-                    reiciendis obcaecati!</p>
-            </div>
-        </a>
-    </div>
-    <div class="rzw-box-content text-start">
-        <a href="<?= base_url('/dashboard/qc_air_botol/fisikokimia') ?>">
-            <div class="card-body">
-                <h5 class="pt-2 fw-bold">Fisiko Kimia</h5>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus voluptate velit sunt quod ducimus!
-                    A ipsa nobis, excepturi quis labore modi alias laborum quae inventore praesentium similique est
-                    reiciendis obcaecati!</p>
-            </div>
-        </a>
-    </div>
-    <div class="rzw-box-content text-start">
-        <a href="<?= base_url('/dashboard/qc_air_botol/fisikokimia') ?>">
-            <div class="card-body">
-                <h5 class="pt-2 fw-bold">Fisiko Kimia</h5>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus voluptate velit sunt quod ducimus!
-                    A ipsa nobis, excepturi quis labore modi alias laborum quae inventore praesentium similique est
-                    reiciendis obcaecati!</p>
-            </div>
-        </a>
-    </div>
+    <?php endforeach; ?>
 </div>
 <?= $this->endSection() ?>
