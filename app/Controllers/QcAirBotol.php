@@ -13,7 +13,34 @@ class QcAirBotol extends BaseController
         $this->session = \Config\Services::session();
         $this->validation = \Config\Services::validation();
         $this->AuthModel = new AuthModel();
+        $this->QCModel = new QcAirBotol();
         $this->session = \Config\Services::session();
+    }
+
+    public function getLabelTime()
+    {
+        $tanggal = date('d');
+        $bulan = date('F');
+        $tahun = date('Y');
+        $jam = date('H');
+        $menit = date('i');
+        $detik = date('s');
+        $bulanIndonesia = [
+            'January' => 'Januari',
+            'February' => 'Februari',
+            'March' => 'Maret',
+            'April' => 'April',
+            'May' => 'Mei',
+            'June' => 'Juni',
+            'July' => 'Juli',
+            'August' => 'Agustus',
+            'September' => 'September',
+            'October' => 'Oktober',
+            'November' => 'November',
+            'December' => 'Desember',
+        ];
+        $labelTime = $tanggal . ' ' . $bulanIndonesia[$bulan] . ' ' . $tahun . ' | ' . $jam . ':' . $menit . ':' . $detik;
+        return $labelTime;
     }
 
     public function index()
@@ -104,7 +131,31 @@ class QcAirBotol extends BaseController
         if (!$this->validation->run($this->request->getVar())) {
             return redirect()->back()->withInput()->with('input', $this->validation->getErrors());
         }
-        return redirect()->to('/dashboard/qc_air_botol/organoleptik');
+
+        // $input = [];
+        // for ($i=1; $i <= 5; $i++) { 
+        //     $input[] = [
+        //         'tds' => $this->request->getVar('tds_input_'.$i),
+        //         'ph' => $this->request->getVar('ph_input_'.$i),
+        //         'keruhan' => $this->request->getVar('keruhan_input_'.$i),
+        //     ];
+        // };
+        // $data = [
+        //     'user_id' => $this->session->get('id'),
+        //     'data' => json_encode($input),
+        //     'date' => [
+        //         'timestamps' => time(),
+        //         'label' => $this->getLabelTime(),
+        //     ],
+        //     'type' => "fisikokimia",
+        // ];
+        // $this->QCModel->insert($data);
+
+        return redirect()->to('/dashboard/qc_air_botol/organoleptik')->with('alert', [
+            'type' => 'success',
+            'message' => 'Data berhasil disimpan.',
+            'title' => 'Success',
+        ]);
     }
 
     public function QCAirBotolOrganoleptik()
