@@ -20,5 +20,6 @@ $routes->group('dashboard', function($routes) {
         $routes->post('qc_air_botol_fisikokimia', 'QcAirBotol::QCAirBotolFisikokimia');
         $routes->post('qc_air_botol_organoleptik', 'QcAirBotol::QCAirBotolOrganoleptik');
         $routes->post('qc_air_botol_mikrobiologi', 'QcAirBotol::QCAirBotolMikrobiologi');
+        $routes->get('detail/(:num)', 'QcAirBotol::QCAirBotolDetail/$1');
     });
 });

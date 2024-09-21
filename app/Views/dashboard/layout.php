@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/111b8c6336.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
     @import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap');
 
@@ -112,13 +112,19 @@
     <div class="canvas">
     <?= $this->renderSection('content') ?>
     </div>
-    <script>
-        history.replaceState(null, '', location.href);
-        window.addEventListener('popstate', function (event) {
-            history.pushState(null, '', location.href);
+    <?php
+        if (session('alert') && session('alert')['type']) {
+    ?>
+        <script>
+        Swal.fire({
+            title: "<?= session('alert')['title'] ?>",
+            text: "<?= session('alert')['message'] ?>",
+            icon: "<?= session('alert')['type'] ?>"
         });
-    </script>
-    
+        </script>
+    <?php
+        }
+    ?>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

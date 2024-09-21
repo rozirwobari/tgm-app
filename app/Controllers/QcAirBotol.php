@@ -134,8 +134,8 @@ class QcAirBotol extends BaseController
         }
 
         $input = [];
-        for ($i=1; $i <= 5; $i++) { 
-            $input[] = [
+        for ($i=1; $i <= 5; $i++) {
+            $input['data'][] = [
                 'tds' => $this->request->getVar('tds_input_'.$i),
                 'ph' => $this->request->getVar('ph_input_'.$i),
                 'keruhan' => $this->request->getVar('keruhan_input_'.$i),
@@ -152,7 +152,7 @@ class QcAirBotol extends BaseController
         ];
         $this->QCModel->insert($data);
 
-        return redirect()->to('/dashboard/qc_air_botol/organoleptik')->with('alert', [
+        return redirect()->to(base_url('/dashboard/qc_air_botol'))->with('alert', [
             'type' => 'success',
             'message' => 'Data berhasil disimpan.',
             'title' => 'Success',
@@ -172,6 +172,10 @@ class QcAirBotol extends BaseController
             $errors['aroma_input_' . $i] = [
                 'required' => 'Aroma input ' . $i . ' harus diisi.',
             ];
+            $rules['warna_input_' . $i] = 'required';
+            $errors['warna_input_' . $i] = [
+                'required' => 'Warna input ' . $i . ' harus diisi.',
+            ];
         }
 
         $this->validation->setRules($rules, $errors);
@@ -179,7 +183,31 @@ class QcAirBotol extends BaseController
         if (!$this->validation->run($this->request->getVar())) {
             return redirect()->back()->withInput()->with('input', $this->validation->getErrors());
         }
-        return redirect()->to('/dashboard/qc_air_botol/organoleptik');
+        
+        $input = [];
+        for ($i=1; $i <= 5; $i++) {
+            $input['data'][] = [
+                'rasa' => $this->request->getVar('rasa_input_'.$i),
+                'aroma' => $this->request->getVar('aroma_input_'.$i),
+                'warna' => $this->request->getVar('warna_input_'.$i),
+            ];
+        };
+        $data = [
+            'user_id' => $this->session->get('id'),
+            'data' => json_encode($input),
+            'date' => json_encode([
+                'timestamps' => time(),
+                'label' => $this->getLabelTime(),
+            ]),
+            'type' => "organoleptik",
+        ];
+        $this->QCModel->insert($data);
+
+        return redirect()->to(base_url('/dashboard/qc_air_botol'))->with('alert', [
+            'type' => 'success',
+            'message' => 'Data berhasil disimpan.',
+            'title' => 'Success',
+        ]);
     }
 
     public function QCAirBotolMikrobiologi()
@@ -187,12 +215,12 @@ class QcAirBotol extends BaseController
         $rules = [];
         $errors = [];
         for ($i = 1; $i <= 5; $i++) {
-            $rules['rasa_input_' . $i] = 'required';
-            $errors['rasa_input_' . $i] = [
+            $rules['alt_input_' . $i] = 'required';
+            $errors['alt_input_' . $i] = [
                 'required' => 'Rasa input ' . $i . ' harus diisi.',
             ];
-            $rules['aroma_input_' . $i] = 'required';
-            $errors['aroma_input_' . $i] = [
+            $rules['ec_input_' . $i] = 'required';
+            $errors['ec_input_' . $i] = [
                 'required' => 'Aroma input ' . $i . ' harus diisi.',
             ];
         }
@@ -202,6 +230,50 @@ class QcAirBotol extends BaseController
         if (!$this->validation->run($this->request->getVar())) {
             return redirect()->back()->withInput()->with('input', $this->validation->getErrors());
         }
-        return redirect()->to('/dashboard/qc_air_botol/mikrobiologi');
+        
+
+
+        $input = [];
+        for ($i=1; $i <= 5; $i++) {
+            $input['data'][] = [
+                'alt' => $this->request->getVar('alt_input_'.$i),
+                'ec' => $this->request->getVar('ec_input_'.$i),
+            ];
+        };
+        $data = [
+            'user_id' => $this->session->get('id'),
+            'data' => json_encode($input),
+            'date' => json_encode([
+                'timestamps' => time(),
+                'label' => $this->getLabelTime(),
+            ]),
+            'type' => "mikrobiologi",
+        ];
+        $this->QCModel->insert($data);
+
+        return redirect()->to(base_url('/dashboard/qc_air_botol'))->with('alert', [
+            'type' => 'success',
+            'message' => 'Data berhasil disimpan.',
+            'title' => 'Success',
+        ]);
+    }
+
+    public function QCAirBotolDetail($id)
+    {
+        if (!$this->session->get('isLoggedIn')) {
+            return redirect()->to(base_url('/'))->with('alert', [
+                'type' => 'warning',
+                'message' => 'Anda harus login terlebih dahulu!',
+                'title' => 'Permission Denied',
+            ]);
+        }
+        $getData = $this->QCModel->find($id);
+        $dataUser = $this->AuthModel->find($getData['user_id']);
+        $data = [
+            'title' => 'Detail QC Air Botol',
+        ];
+        $data['details'] = $getData;
+        $data['data_user'] = $dataUser;
+        return view('dashboard/AirBotol/detail', $data);
     }
 }
