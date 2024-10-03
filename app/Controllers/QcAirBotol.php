@@ -125,6 +125,33 @@ class QcAirBotol extends BaseController
             $errors['keruhan_input_' . $i] = [
                 'required' => 'Keruhan input ' . $i . ' harus diisi.',
             ];
+
+            $rules['rasa_input_' . $i] = 'required';
+            $errors['rasa_input_' . $i] = [
+                'required' => 'Rasa input ' . $i . ' harus diisi.',
+            ];
+            $rules['aroma_input_' . $i] = 'required';
+            $errors['aroma_input_' . $i] = [
+                'required' => 'Aroma input ' . $i . ' harus diisi.',
+            ];
+            $rules['warna_input_' . $i] = 'required';
+            $errors['warna_input_' . $i] = [
+                'required' => 'Warna input ' . $i . ' harus diisi.',
+            ];
+        }
+
+        for ($i = 1; $i <= 3; $i++) {
+            $rules['alt_input_' . $i] = 'required';
+            $errors['alt_input_' . $i] = [
+                'required' => 'ALT input ' . $i . ' harus diisi.',
+            ];
+        }
+
+        for ($i = 1; $i <= 2; $i++) {
+            $rules['ec_input_' . $i] = 'required';
+            $errors['ec_input_' . $i] = [
+                'required' => 'EC input ' . $i . ' harus diisi.',
+            ];
         }
 
         $this->validation->setRules($rules, $errors);
@@ -135,12 +162,29 @@ class QcAirBotol extends BaseController
 
         $input = [];
         for ($i=1; $i <= 5; $i++) {
-            $input['data'][] = [
+            $input['data']['fisikokimia'][] = [
                 'tds' => $this->request->getVar('tds_input_'.$i),
                 'ph' => $this->request->getVar('ph_input_'.$i),
                 'keruhan' => $this->request->getVar('keruhan_input_'.$i),
             ];
+
+            $input['data']['organoleptik'][] = [
+                'rasa' => $this->request->getVar('rasa_input_'.$i),
+                'aroma' => $this->request->getVar('aroma_input_'.$i),
+                'warna' => $this->request->getVar('warna_input_'.$i),
+            ];
         };
+
+        for ($i=1; $i <= 3; $i++) {
+            $input['data']['mikrobiologi'][] = [
+                'alt' => $this->request->getVar('alt_input_'.$i),
+                'ec' => $this->request->getVar('ec_input_'.$i)
+            ];
+            if ($i == 3) {
+                unset($input['data']['mikrobiologi'][$i - 1]['ec']);
+            }
+        }
+
         $data = [
             'user_id' => $this->session->get('id'),
             'data' => json_encode($input),
@@ -269,11 +313,14 @@ class QcAirBotol extends BaseController
         }
         $getData = $this->QCModel->find($id);
         $dataUser = $this->AuthModel->find($getData['user_id']);
+
+        
+        // dd(json_decode($getData['data'])->data->fisikokimia[1]->tds);
         $data = [
             'title' => 'Detail QC Air Botol',
+            'details' => $getData,
+            'data_user' => $dataUser,
         ];
-        $data['details'] = $getData;
-        $data['data_user'] = $dataUser;
         return view('dashboard/AirBotol/detail', $data);
     }
 }

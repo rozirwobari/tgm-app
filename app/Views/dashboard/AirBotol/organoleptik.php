@@ -4,7 +4,7 @@
 <div class="rzw-container" style="display: flex;">
     <div class="rzw-box-content" style="flex: 0 0 15%; padding: 1px; border-radius: 10px 0 0 10px;">
         <a href="<?= base_url('/dashboard/qc_air_botol') ?>">
-            <h5 style="font-weight: 600; padding-top: 7px;">
+            <h5 style="font-weight: 600; padding-top: 11%;">
                 <svg  xmlns="http://www.w3.org/2000/svg"  width="22"  height="22"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
             </h5>
         </a>

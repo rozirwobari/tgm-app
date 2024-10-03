@@ -24,9 +24,11 @@
         display: block;
         justify-content: center;
         align-items: center;
-        min-height: 100vh; /* Pastikan tinggi canvas minimal full screen */
+        min-height: 100vh;
+        /* Pastikan tinggi canvas minimal full screen */
         background-image: url('<?= base_url('asset/img/loginbkg.png') ?>');
-        background-size: cover; /* Pastikan gambar latar belakang menyesuaikan dengan ukuran layar */
+        background-size: cover;
+        /* Pastikan gambar latar belakang menyesuaikan dengan ukuran layar */
         background-position: center;
         background-blend-mode: multiply;
         background-color: rgba(0, 0, 0, 0.3);
@@ -105,23 +107,55 @@
         text-decoration: none;
         color: #000;
     }
+
+    .rzw-keterangan-green {
+        background-color: green;
+        color: white;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: 6px;
+        padding-bottom: 2px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .rzw-keterangan-yellow {
+        background-color: #ecd700;
+        color: black;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: 6px;
+        padding-bottom: 2px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .rzw-keterangan-red {
+        background-color: red;
+        color: white;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: 6px;
+        padding-bottom: 2px;
+        border-radius: 5px;
+    }
     </style>
 </head>
 
 <body>
     <div class="canvas">
-    <?= $this->renderSection('content') ?>
+        <?= $this->renderSection('content') ?>
     </div>
     <?php
         if (session('alert') && session('alert')['type']) {
     ?>
-        <script>
-        Swal.fire({
-            title: "<?= session('alert')['title'] ?>",
-            text: "<?= session('alert')['message'] ?>",
-            icon: "<?= session('alert')['type'] ?>"
-        });
-        </script>
+    <script>
+    Swal.fire({
+        title: "<?= session('alert')['title'] ?>",
+        text: "<?= session('alert')['message'] ?>",
+        icon: "<?= session('alert')['type'] ?>"
+    });
+    </script>
     <?php
         }
     ?>
