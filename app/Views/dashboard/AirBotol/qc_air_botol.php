@@ -15,7 +15,7 @@
 </div>
 <div class="rzw-box-content">
     <div class="card-body">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-6">
                 <a href="<?= base_url('/dashboard/qc_air_botol/fisikokimia') ?>"
                     class="btn btn-primary w-100 rzw-btn-content">Fisiko Kimia</a>
@@ -24,11 +24,11 @@
                 <a href="<?= base_url('/dashboard/qc_air_botol/organoleptik') ?>"
                     class="btn btn-primary w-100 rzw-btn-content">Organoleptik</a>
             </div>
-        </div>
-        <div class="row pt-3">
+        </div> -->
+        <div class="row">
             <div class="col-12">
-                <a href="<?= base_url('/dashboard/qc_air_botol/mikrobiologi') ?>"
-                    class="btn btn-primary w-100 rzw-btn-content">Mikrobiologi</a>
+                <a href="<?= base_url('/dashboard/qc_air_botol/fisikokimia') ?>"
+                    class="btn btn-primary w-100 rzw-btn-content">Input Data</a>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
     <div class="rzw-box-content text-start">
         <a href="<?= base_url('/dashboard/qc_air_botol/detail/' . $value['id'].'/'.$value['type']) ?>">
             <div class="card-body">
-                <p class="fw-bold"><?= json_decode($value['date'])->label ?> [<?= strtoupper($value['type']) ?>]</p>
+                <p class="fw-bold"><?= json_decode($value['date'])->label ?></p>
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus voluptate velit sunt quod ducimus!
                     A ipsa nobis, excepturi quis labore modi alias laborum quae inventore praesentium similique est
                     reiciendis obcaecati!</p>
