@@ -340,4 +340,79 @@
             ?>
     </div>
 </div>
+
+
+<div class="rzw-box-content" style="padding: 0px; margin-top: 35px;">
+    <p class="p-2" style="font-weight: 600;">MIKROBIOLGI</p>
+</div>
+
+<div class="rzw-box-content">
+    <div class="card-body">
+        <div class="container text-center">
+            <h3>ALT</h3>
+        </div>
+            <?php
+                for ($i=1; $i <= 3; $i++) { 
+                    $data = $decode_qc->mikrobiologi[($i - 1)]->alt;
+            ?>
+            <div class="input-group my-3">
+                <input type="text" class="form-control rzw-input <?= session('input.alt_input_'.$i) ? 'is-invalid' : '' ?>"
+                    name="alt_input_<?= $i ?>" id="alt_input_<?= $i ?>" placeholder="Value <?= $i ?>"
+                    value="<?= $data ?>" style="background-color: <?= $data >= 0 && $data <= 1.0 ? 'green' : ($data >= 1.1 && $data <= 1.5 ? '#ecd700' : '#ff0000') ?>; color: <?= $data >= 0 && $data <= 1.0 ? 'white' : ($data >= 1.1 && $data <= 1.5 ? 'black' : 'white') ?>;">
+                <div class="input-group-prepend">
+                    <span class="rzw-icon-input" style="z-index: 5;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-cursor-text">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M10 12h4" />
+                            <path d="M9 4a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3" />
+                            <path d="M15 4a3 3 0 0 0 -3 3v10a3 3 0 0 0 3 3" />
+                        </svg>
+                    </span>
+                </div>
+                <div id="validationServerUsernameFeedback" class="invalid-feedback text-start">
+                    <?= session('input.alt_input_'.$i) ?>
+                </div>
+            </div>
+            <?php
+                }
+            ?>
+    </div>
+</div>
+
+<div class="rzw-box-content">
+    <div class="card-body">
+        <div class="container text-center">
+            <h3>EC</h3>
+        </div>
+            <?php
+                for ($i=1; $i <= 2; $i++) { 
+                    $data = $decode_qc->mikrobiologi[($i - 1)]->ec;
+            ?>
+            <div class="input-group my-3">
+                <input type="text" class="form-control rzw-input <?= session('input.ec_input_'.$i) ? 'is-invalid' : '' ?>"
+                    name="ec_input_<?= $i ?>" id="ec_input_<?= $i ?>" placeholder="Value <?= $i ?>"
+                    value="<?= $data ?>" style="background-color: <?= $data >= 0 && $data <= 1.0 ? 'green' : ($data >= 1.1 && $data <= 1.5 ? '#ecd700' : '#ff0000') ?>; color: <?= $data >= 0 && $data <= 1.0 ? 'white' : ($data >= 1.1 && $data <= 1.5 ? 'black' : 'white') ?>;">
+                <div class="input-group-prepend">
+                    <span class="rzw-icon-input" style="z-index: 5;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-cursor-text">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M10 12h4" />
+                            <path d="M9 4a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3" />
+                            <path d="M15 4a3 3 0 0 0 -3 3v10a3 3 0 0 0 3 3" />
+                        </svg>
+                    </span>
+                </div>
+                <div id="validationServerUsernameFeedback" class="invalid-feedback text-start">
+                    <?= session('input.ec_input_'.$i) ?>
+                </div>
+            </div>
+            <?php
+                }
+            ?>
+    </div>
+</div>
 <?= $this->endSection() ?>
