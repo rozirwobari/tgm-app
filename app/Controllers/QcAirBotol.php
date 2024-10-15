@@ -113,42 +113,42 @@ class QcAirBotol extends BaseController
         $rules = [];
         $errors = [];
         for ($i = 1; $i <= 5; $i++) {
-            $rules['tds_input_' . $i] = 'required';
+            $rules['tds_input_' . $i] = 'permit_empty';
             $errors['tds_input_' . $i] = [
                 'required' => 'TDS input ' . $i . ' harus diisi.',
             ];
-            $rules['ph_input_' . $i] = 'required';
+            $rules['ph_input_' . $i] = 'permit_empty';
             $errors['ph_input_' . $i] = [
                 'required' => 'PH input ' . $i . ' harus diisi.',
             ];
-            $rules['keruhan_input_' . $i] = 'required';
+            $rules['keruhan_input_' . $i] = 'permit_empty';
             $errors['keruhan_input_' . $i] = [
                 'required' => 'Keruhan input ' . $i . ' harus diisi.',
             ];
 
-            $rules['rasa_input_' . $i] = 'required';
+            $rules['rasa_input_' . $i] = 'permit_empty';
             $errors['rasa_input_' . $i] = [
                 'required' => 'Rasa input ' . $i . ' harus diisi.',
             ];
-            $rules['aroma_input_' . $i] = 'required';
+            $rules['aroma_input_' . $i] = 'permit_empty';
             $errors['aroma_input_' . $i] = [
                 'required' => 'Aroma input ' . $i . ' harus diisi.',
             ];
-            $rules['warna_input_' . $i] = 'required';
+            $rules['warna_input_' . $i] = 'permit_empty';
             $errors['warna_input_' . $i] = [
                 'required' => 'Warna input ' . $i . ' harus diisi.',
             ];
         }
 
         for ($i = 1; $i <= 3; $i++) {
-            $rules['alt_input_' . $i] = 'required';
+            $rules['alt_input_' . $i] = 'permit_empty';
             $errors['alt_input_' . $i] = [
                 'required' => 'ALT input ' . $i . ' harus diisi.',
             ];
         }
 
         for ($i = 1; $i <= 2; $i++) {
-            $rules['ec_input_' . $i] = 'required';
+            $rules['ec_input_' . $i] = 'permit_empty';
             $errors['ec_input_' . $i] = [
                 'required' => 'EC input ' . $i . ' harus diisi.',
             ];
