@@ -30,15 +30,19 @@
                 <a href="<?= base_url('/dashboard/qc_air_botol/fisikokimia') ?>"
                     class="btn btn-primary w-100 rzw-btn-content">Input Data</a>
             </div>
+            <div class="col-12 pt-3">
+                <a href="<?= base_url('/dashboard/qc_air_botol/export') ?>"
+                    class="btn btn-primary w-100 rzw-btn-content" style="background-color: green;">Export</a>
+            </div>
         </div>
     </div>
 </div>
 <div class="mt-3 overflow-auto" style="max-height: 70vh; scrollbar-width: none;">
     <?php foreach ($qc_air_botol as $value) : ?>
     <div class="rzw-box-content text-start">
-        <a href="<?= base_url('/dashboard/qc_air_botol/detail/' . $value['id'].'/'.$value['type']) ?>">
+        <a href="<?= base_url('/dashboard/qc_air_botol/detail/' . $value['id']) ?>">
             <div class="card-body">
-                <p class="fw-bold"><?= json_decode($value['date'])->label ?></p>
+                <p class="fw-bold"><?= json_decode($value['date'])->label ?> [<span style="color: <?= $value['status'] == 0 ? '#c6a200' : ($value['status'] == 1 ? 'green' : 'red') ?>"><?= $value['status'] == 0 ? 'Pending' : ($value['status'] == 1 ? 'Approve' : 'Reject') ?></span>]</p>
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus voluptate velit sunt quod ducimus!
                     A ipsa nobis, excepturi quis labore modi alias laborum quae inventore praesentium similique est
                     reiciendis obcaecati!</p>

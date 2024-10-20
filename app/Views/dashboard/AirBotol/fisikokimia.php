@@ -118,7 +118,7 @@
                     <option value="">Pilih Rasa</option>
                     <option value="Normal" <?= old('rasa_input_'.$i) == 'Normal' ? 'selected' : '' ?>>Normal</option>
                     <option value="Pahit" <?= old('rasa_input_'.$i) == 'Pahit' ? 'selected' : '' ?>>Pahit</option>
-                    <option value="Merah" <?= old('rasa_input_'.$i) == 'Merah' ? 'selected' : '' ?>>Merah</option>
+                    <option value="" <?= old('rasa_input_'.$i) == '' ? 'selected' : '' ?>>-</option>
                 </select>
                 <div class="input-group-prepend">
                     <span class="rzw-icon-input" style="z-index: 5;">
@@ -201,7 +201,7 @@
             ?>
             <div class="input-group my-3">
                 <input type="text" class="form-control rzw-input <?= session('input.alt_input_'.$i) ? 'is-invalid' : '' ?>"
-                    name="alt_input_<?= $i ?>" id="tds_input_<?= $i ?>" placeholder="Value <?= $i ?>"
+                    name="alt_input_<?= $i ?>" id="alt_input_<?= $i ?>" placeholder="Value <?= $i ?>"
                     value="<?= old('alt_input_'.$i) ?>">
                 <div class="input-group-prepend">
                     <span class="rzw-icon-input" style="z-index: 5;">

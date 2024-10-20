@@ -21,5 +21,10 @@ $routes->group('dashboard', function($routes) {
         $routes->post('qc_air_botol_organoleptik', 'QcAirBotol::QCAirBotolOrganoleptik');
         $routes->post('qc_air_botol_mikrobiologi', 'QcAirBotol::QCAirBotolMikrobiologi');
         $routes->get('detail/(:num)', 'QcAirBotol::QCAirBotolDetail/$1');
+        $routes->post('update/(:num)', 'QcAirBotol::QCAirBotolUpdate/$1');
+        $routes->get('reject/(:num)', 'QcAirBotol::QCAirBotolReject/$1');
+        $routes->get('delete/(:num)', 'QcAirBotol::QCAirBotolDelete/$1');
+        $routes->get('approve/(:num)', 'QcAirBotol::QCAirBotolApprove/$1');
+        $routes->get('export', 'QcAirBotol::QCAirBotolExport');
     });
 });
