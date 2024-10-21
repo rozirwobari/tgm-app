@@ -16,6 +16,9 @@ $routes->get('/reset_password/(:any)', 'AuthController::reset_password/$1');
 $routes->post('/reset_password', 'AuthController::auth_reset/$1');
 $routes->get('/export_all_excel', 'Home::ExportAllExcel');
 $routes->get('/manage_account', 'Home::ManageAccount');
+$routes->get('/edit_account/(:num)', 'Home::ManageAccountDetail/$1');
+$routes->post('/delete_account/(:num)', 'Home::ManageAccountDelete/$1');
+$routes->post('/save_account', 'Home::ManageAccountSave');
 
 $routes->group('dashboard', function($routes) {
     $routes->get('/', 'Home::index');

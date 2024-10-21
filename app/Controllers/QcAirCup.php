@@ -60,7 +60,17 @@ class QcAirCup extends BaseController
                     ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
                     ->join('role', 'users.role = role.id')
                     ->find($this->session->get('id'));
-        
+
+        if (empty($data_user)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
+            ]);
+        }
+
+
         // dd($data_user);
         $data = [
             'title' => 'QC Air Cup',
@@ -79,6 +89,22 @@ class QcAirCup extends BaseController
                 'title' => 'Permission Denied',
             ]);
         }
+
+
+        $data_user = $this->AuthModel
+                    ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
+                    ->join('role', 'users.role = role.id')
+                    ->find($this->session->get('id'));
+
+        if (empty($data_user)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
+            ]);
+        }
+
 
         $data = [
             'title' => 'QC Air Cup',
@@ -191,11 +217,24 @@ class QcAirCup extends BaseController
                 'title' => 'Permission Denied',
             ]);
         }
+
+
         $getData = $this->QCModel->find($id);
-        $dataUser = $this->AuthModel
-                    ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
-                    ->join('role', 'users.role = role.id')
-                    ->find($this->session->get('id'));
+        $data_user = $this->AuthModel
+                ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
+                ->join('role', 'users.role = role.id')
+                ->find($this->session->get('id'));
+
+        if (empty($data_user)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
+            ]);
+        }
+
+
         $data = [
             'title' => 'Detail QC Air Cup',
             'details' => $getData,
@@ -215,6 +254,25 @@ class QcAirCup extends BaseController
                 'title' => 'Permission Denied',
             ]);
         }
+
+        $data_user = $this->AuthModel
+                ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
+                ->join('role', 'users.role = role.id')
+                ->find($this->session->get('id'));
+
+        if (empty($data_user)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
+            ]);
+        }
+
+
+
+
+
         $getData = $this->QCModel->find($id);
         if (!$getData) {
             return redirect()->to(base_url('/dashboard/AirCup/index'))->with('alert', [

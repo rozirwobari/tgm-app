@@ -60,7 +60,19 @@ class QcAirBotol extends BaseController
                     ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
                     ->join('role', 'users.role = role.id')
                     ->find($this->session->get('id'));
-        
+
+        if (empty($data_user)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
+            ]);
+        }
+
+
+
+
         // dd($data_user);
         $data = [
             'title' => 'QC Air Botol',
@@ -80,6 +92,21 @@ class QcAirBotol extends BaseController
             ]);
         }
 
+        $data_user = $this->AuthModel
+                    ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
+                    ->join('role', 'users.role = role.id')
+                    ->find($this->session->get('id'));
+
+        if (empty($data_user)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
+            ]);
+        }
+
+
         $data = [
             'title' => 'Fisiko Kimia',
         ];
@@ -96,6 +123,20 @@ class QcAirBotol extends BaseController
             ]);
         }
 
+        $data_user = $this->AuthModel
+                    ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
+                    ->join('role', 'users.role = role.id')
+                    ->find($this->session->get('id'));
+
+        if (empty($data_user)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
+            ]);
+        }
+
         $data = [
             'title' => 'Organoleptik',
         ];
@@ -109,6 +150,20 @@ class QcAirBotol extends BaseController
                 'type' => 'warning',
                 'message' => 'Anda harus login terlebih dahulu!',
                 'title' => 'Permission Denied',
+            ]);
+        }
+
+        $data_user = $this->AuthModel
+                    ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
+                    ->join('role', 'users.role = role.id')
+                    ->find($this->session->get('id'));
+
+        if (empty($data_user)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
             ]);
         }
 
@@ -222,21 +277,22 @@ class QcAirBotol extends BaseController
                 'title' => 'Permission Denied',
             ]);
         }
+
         $getData = $this->QCModel->find($id);
         $dataUser = $this->AuthModel
                     ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
                     ->join('role', 'users.role = role.id')
                     ->find($this->session->get('id'));
 
-        // dd([
-        //     $this->session->get('id'),
-        //     $getData,
-        //     $dataUser,
-        //     $getData['user_id'],
-        //     $dataUser['user_id'],
-        // ]);
-        
-        // dd(json_decode($getData['data'])->data->fisikokimia[1]->tds);
+        if (empty($dataUser)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
+            ]);
+        }
+
         $data = [
             'title' => 'Detail QC Air Botol',
             'details' => $getData,
@@ -256,6 +312,21 @@ class QcAirBotol extends BaseController
                 'title' => 'Permission Denied',
             ]);
         }
+
+        $dataUser = $this->AuthModel
+                    ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
+                    ->join('role', 'users.role = role.id')
+                    ->find($this->session->get('id'));
+
+        if (empty($dataUser)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
+            ]);
+        }
+
         $getData = $this->QCModel->find($id);
         if (!$getData) {
             return redirect()->to(base_url('/dashboard/qc_air_botol'))->with('alert', [

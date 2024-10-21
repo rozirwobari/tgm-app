@@ -2,11 +2,11 @@
 
 namespace App\Controllers;
 use App\Models\AuthModel;
-
 use App\Models\QcAirBotolModel;
 use App\Models\QcAirBakuModel;
 use App\Models\QcAirGalonModel;
 use App\Models\QcAirCupModel;
+use App\Models\RoleModel;
 
 class Home extends BaseController
 {
@@ -23,6 +23,7 @@ class Home extends BaseController
         $this->QcAirGalonModel = new QcAirGalonModel();
         $this->QcAirCupModel = new QcAirCupModel();
         $this->QcAirBakuModel = new QcAirBakuModel();
+        $this->RoleModel = new RoleModel();
     }
 
     public function index()
@@ -40,6 +41,15 @@ class Home extends BaseController
                     ->select('users.id as user_id, users.nama, users.img, role.id as role_id, role.name, role.label')
                     ->join('role', 'users.role = role.id')
                     ->find($this->session->get('id'));
+
+        if (empty($usersData)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
+            ]);
+        }
 
         // dd($usersData);
         $data = [
@@ -71,7 +81,70 @@ class Home extends BaseController
             ]);
         }
 
-        return view('dashboard/ManageAccount');
+        $data = [
+            'accounts' => $this->AuthModel->orderBy('id', 'DESC')->findAll()
+        ];
+        return view('dashboard/ManageAccount', $data);
+    }
+
+    public function ManageAccountDetail($id)
+    {
+        if (!$this->session->get('isLoggedIn')) {
+            return redirect()->to(base_url('/'))->with('alert', [
+                'type' => 'warning',
+                'message' => 'Anda harus login terlebih dahulu!',
+                'title' => 'Permission Denied',
+            ]);
+        }
+
+        $data = [
+            'account' => $this->AuthModel->find($id),
+            'roles' => $this->RoleModel->findAll()
+        ];
+        return view('dashboard/EditUser', $data);
+    }
+
+    public function ManageAccountDelete($id)
+    {
+        if (!$this->session->get('isLoggedIn')) {
+            return redirect()->to(base_url('/'))->with('alert', [
+                'type' => 'warning',
+                'message' => 'Anda harus login terlebih dahulu!',
+                'title' => 'Permission Denied',
+            ]);
+        }
+
+        $this->AuthModel->delete($id);
+        $this->session->setFlashdata('alert', [
+            'type' => 'success',
+            'message' => 'Data berhasil dihapus.',
+            'title' => 'Data Dihapus',
+        ]);
+        return json_encode(['status' => 200, 'message' => 'Data berhasil dihapus!']);
+    }
+
+    public function ManageAccountSave()
+    {
+        if (!$this->session->get('isLoggedIn')) {
+            return redirect()->to(base_url('/'))->with('alert', [
+                'type' => 'warning',
+                'message' => 'Anda harus login terlebih dahulu!',
+                'title' => 'Permission Denied',
+            ]);
+        }
+
+        $data = [
+            'nama' => $this->request->getPost('nama'),
+            'email' => $this->request->getPost('email'),
+            'role' => $this->request->getPost('role'),
+        ];
+
+        $this->AuthModel->update($this->request->getPost('user_id'), $data);
+        return redirect()->to(base_url('manage_account'))->with('alert', [
+            'type' => 'success',
+            'message' => 'Data berhasil diubah.',
+            'title' => 'Data Diubah',
+        ]);
     }
 
     public function ExportAllExcel()

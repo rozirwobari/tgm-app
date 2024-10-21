@@ -60,6 +60,15 @@ class QcAirBaku extends BaseController
                     ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
                     ->join('role', 'users.role = role.id')
                     ->find($this->session->get('id'));
+
+        if (empty($data_user)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
+            ]);
+        }
         
         // dd($data_user);
         $data = [
@@ -77,6 +86,20 @@ class QcAirBaku extends BaseController
                 'type' => 'warning',
                 'message' => 'Anda harus login terlebih dahulu!',
                 'title' => 'Permission Denied',
+            ]);
+        }
+
+        $data_user = $this->AuthModel
+                    ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
+                    ->join('role', 'users.role = role.id')
+                    ->find($this->session->get('id'));
+
+        if (empty($data_user)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
             ]);
         }
 
@@ -196,6 +219,17 @@ class QcAirBaku extends BaseController
                     ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
                     ->join('role', 'users.role = role.id')
                     ->find($this->session->get('id'));
+
+        if (empty($dataUser)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
+            ]);
+        }
+
+        
         $data = [
             'title' => 'Detail QC Air Baku',
             'details' => $getData,
@@ -215,6 +249,22 @@ class QcAirBaku extends BaseController
                 'title' => 'Permission Denied',
             ]);
         }
+        $usersData = $this->AuthModel
+                    ->select('users.id as user_id, users.nama, users.img, role.id as role_id, role.name, role.label')
+                    ->join('role', 'users.role = role.id')
+                    ->find($this->session->get('id'));
+
+        if (empty($usersData)) {
+            $this->session->destroy();
+            return redirect()->to(base_url())->with('alert', [
+                'type' => 'error',
+                'message' => 'Session expired, please login again!',
+                'title' => 'Session Expired',
+            ]);
+        }
+
+
+
         $getData = $this->QCModel->find($id);
         if (!$getData) {
             return redirect()->to(base_url('/dashboard/AirBaku/index'))->with('alert', [
