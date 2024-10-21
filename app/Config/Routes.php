@@ -10,6 +10,8 @@ $routes->get('/daftar', 'AuthController::daftar');
 $routes->post('/daftar', 'AuthController::auth_daftar');
 $routes->post('/', 'AuthController::auth_login');
 $routes->get('/logout', 'AuthController::logout');
+$routes->get('/lupa-password', 'AuthController::forgot_password');
+
 $routes->group('dashboard', function($routes) {
     $routes->get('/', 'Home::index');
     $routes->group('qc_air_botol', function($routes) {

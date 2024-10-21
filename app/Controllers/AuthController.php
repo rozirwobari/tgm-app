@@ -132,6 +132,15 @@ class AuthController extends BaseController
             'title' => 'Berhasil',
         ]);
     }
+    
+    public function forgot_password()
+    {
+        if ($this->session->get('isLoggedIn')) {
+            return redirect()->to(base_url('dashboard/'));
+        } else {
+            return view('auth/forgot_password');
+        }
+    }
 
     public function logout()
     {
