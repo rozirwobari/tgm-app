@@ -83,7 +83,7 @@ class Home extends BaseController
                 'title' => 'Permission Denied',
             ]);
         }
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('asset/excel/qc_air_all_template.xlsx');
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(base_url('asset/excel/qc_air_all_template.xlsx'));
         
         
         $data = $this->QCAirBotolModel->findAll();
