@@ -24,7 +24,7 @@
                 <a href="<?= base_url('/dashboard/qc_air_galon') ?>" class="btn btn-primary w-100 rzw-btn-content">QC Air Galon</a>
             </div>
             <div class="col-6 pt-3">
-                <a href="<?= base_url('logout') ?>" class="btn btn-primary w-100 rzw-btn-content">QC Air Baku</a>
+                <a href="<?= base_url('/dashboard/qc_air_baku') ?>" class="btn btn-primary w-100 rzw-btn-content">QC Air Baku</a>
             </div>
         </div>
     </div>

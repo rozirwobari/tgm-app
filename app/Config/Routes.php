@@ -46,4 +46,16 @@ $routes->group('dashboard', function($routes) {
         $routes->get('approve/(:num)', 'QcAirGalon::QCAirApprove/$1');
         $routes->get('export', 'QcAirGalon::QCAirExport');
     });
+
+    $routes->group('qc_air_baku', function($routes) {
+        $routes->get('/', 'QcAirBaku::index');
+        $routes->get('input', 'QcAirBaku::input');
+        $routes->get('detail/(:num)', 'QcAirBaku::QCAirDetail/$1');
+        $routes->post('input', 'QcAirBaku::QCAirBakuInput');
+        $routes->post('update/(:num)', 'QcAirBaku::QCAirUpdate/$1');
+        $routes->get('reject/(:num)', 'QcAirBaku::QCAirReject/$1');
+        $routes->get('delete/(:num)', 'QcAirBaku::QCAirDelete/$1');
+        $routes->get('approve/(:num)', 'QcAirBaku::QCAirApprove/$1');
+        $routes->get('export', 'QcAirBaku::QCAirExport');
+    });
 });
