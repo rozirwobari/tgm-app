@@ -83,6 +83,7 @@ class Home extends BaseController
                 'title' => 'Permission Denied',
             ]);
         }
+        // $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('asset/excel/qc_air_all_template.xlsx');
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(FCPATH . 'data/public/asset/excel/qc_air_all_template.xlsx');
         
         
@@ -769,13 +770,12 @@ class Home extends BaseController
             $number++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $filename = 'QC Air ' . date('Y-m-d') . '.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
         $writer->save('php://output');
-
-
     }
 }
