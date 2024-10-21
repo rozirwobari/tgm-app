@@ -21,7 +21,7 @@
                     <p class="fw-bold"><?= $account['nama'] ?> <?= session()->get('id') == $account['id'] ? '<span style="color: green;">[Anda]</span>' : '' ?></p>
                     <p>Username : <?= $account['username'] ?></p>
                     <p>Email Terdaftar : <?= $account['email'] ?></p>
-                    <p>Role : <?= $account['role'] ?></p>
+                    <p>Role : <?= $account['label'] ?></p>
                 </div>
             </a>
         </div>

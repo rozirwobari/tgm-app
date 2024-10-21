@@ -82,7 +82,11 @@ class Home extends BaseController
         }
 
         $data = [
-            'accounts' => $this->AuthModel->orderBy('id', 'DESC')->findAll()
+            'accounts' => $this->AuthModel
+                ->select('users.id as users_id, users.*, role.id as role_id, role.name, role.label')
+                ->join('role', 'users.role = role.id')
+                ->orderBy('users.id', 'DESC')
+                ->findAll()
         ];
         return view('dashboard/ManageAccount', $data);
     }
