@@ -11,6 +11,11 @@ $routes->post('/daftar', 'AuthController::auth_daftar');
 $routes->post('/', 'AuthController::auth_login');
 $routes->get('/logout', 'AuthController::logout');
 $routes->get('/lupa-password', 'AuthController::forgot_password');
+$routes->post('/auth_forgot', 'AuthController::auth_forgot');
+$routes->get('/reset_password/(:any)', 'AuthController::reset_password/$1');
+$routes->post('/reset_password', 'AuthController::auth_reset/$1');
+$routes->get('/export_all_excel', 'Home::ExportAllExcel');
+$routes->get('/manage_account', 'Home::ManageAccount');
 
 $routes->group('dashboard', function($routes) {
     $routes->get('/', 'Home::index');

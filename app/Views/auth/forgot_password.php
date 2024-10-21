@@ -5,7 +5,7 @@
             <div class="card-body">
                 <img src="<?= base_url('asset/img/logo.png') ?>" alt="Login Icon" style="width: 110px; height: auto; margin-top: -10px; margin-bottom: 20px;">
                 <h3 style="padding-bottom: 10px; color: #00b4cd;">Reset Password</h4>
-                <form action="<?= base_url('/') ?>" method="post">
+                <form action="<?= base_url('/auth_forgot') ?>" method="POST">
                     <div class="form-group pt-3">
                         <div class="input-group">
                             <input type="text" class="form-control rzw-input <?= session('input.username') ? 'is-invalid' : '' ?>" name = "username" id="username" placeholder="Username/Email Terdaftar" value="<?= old('username') ?>">

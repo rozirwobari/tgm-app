@@ -142,6 +142,82 @@ class AuthController extends BaseController
         }
     }
 
+    public function auth_forgot()
+    {
+        if ($this->session->get('isLoggedIn')) {
+            return redirect()->to(base_url('dashboard/'));
+        }
+
+        $username = $this->request->getVar('username');
+        $user = $this->model->where('username', $username)->first();
+        if (!$user) {
+            $user = $this->model->where('email', $username)->first();
+        }
+
+        if (!$user) {
+            return redirect()->to(base_url('/lupa-password'))->withInput()->with('errors', collect(['username' => 'Username/Email tidak ditemukan.']));
+        }
+
+        $token = bin2hex(random_bytes(32));
+        $this->model->update($user['id'], ['token_reset' => $token]);
+
+        $email = \Config\Services::email();
+        $email->setTo($user['email']);
+        $email->setSubject('Reset Password');
+        $email->setMessage(view('auth/reset_password_template', ['token' => $token]));
+        $email->setFrom('forgot-password@rozirwobar.my.id', 'RZW Reset Password');
+
+        if ($email->send()) {
+            return redirect()->to(base_url('/'))->with('alert', [
+                'type' => 'success',
+                'message' => 'Link reset password telah dikirim ke email Anda.',
+                'title' => 'Berhasil',
+            ]);
+        } else {
+            return redirect()->to(base_url('/lupa-password'))->with('alert', [
+                'type' => 'error',
+                'message' => 'Gagal mengirim email reset password.',
+                'title' => 'Gagal',
+            ]);
+        }
+    }
+
+    public function reset_password($token)
+    {
+        $user = $this->model->where('token_reset', $token)->first();
+        if (!$user) {
+            return redirect()->to(base_url('/'))->with('alert', [
+                'type' => 'error',
+                'message' => 'Token tidak valid.',
+                'title' => 'Gagal',
+            ]);
+        }
+
+        return view('auth/reset_password', ['token' => $token, 'username' => $user['username']]);
+    }
+
+    public function auth_reset()
+    {
+        $token = $this->request->getVar('token');
+        $password = $this->request->getVar('password');
+
+        $user = $this->model->where('token_reset', $token)->first();
+        if (!$user) {
+            return redirect()->to(base_url('/'))->with('alert', [
+                'type' => 'error',
+                'message' => 'Token tidak valid.',
+                'title' => 'Gagal',
+            ]);
+        }
+
+        $this->model->update($user['id'], ['password' => $password, 'token_reset' => null]);
+        return redirect()->to(base_url('/'))->withInput()->with('alert', [
+            'type' => 'success',
+            'message' => 'Password berhasil diubah.',
+            'title' => 'Berhasil',
+        ]);
+    }
+
     public function logout()
     {
         $this->session->destroy();
