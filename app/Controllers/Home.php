@@ -95,20 +95,20 @@ class Home extends BaseController
 
             $dataUser = $this->AuthModel->find($item['user_id']);
             $date = json_decode($item['date']);
-            $sheet1->setCellValue("A" . $row, $number);
+            $sheet1->setCellValue("A" . $row, !empty($number) ? $number : '');
             $sheet1->getStyle("A" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-            $sheet1->setCellValue("B" . $row, $date->label);
+            $sheet1->setCellValue("B" . $row, !empty($date->label) ? $date->label : '');
             $sheet1->getStyle("B" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-            $sheet1->setCellValue("C" . $row, $item['shift']);
+            $sheet1->setCellValue("C" . $row, !empty($item['shift']) ? $item['shift'] : '');
             $sheet1->getStyle("C" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-            $sheet1->setCellValue("D" . $row, $dataUser['nama']);
+            $sheet1->setCellValue("D" . $row, !empty($dataUser['nama']) ? $dataUser['nama'] : '');
             $sheet1->getStyle("D" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
 
             $QCData = json_decode($item['data'])->data;
             $TDSColumns = ['E', 'F', 'G', 'H', 'I'];
             foreach ($QCData->fisikokimia as $index => $fisikokimia) {
                 $tdsValue = $fisikokimia->tds;
-                $sheet1->setCellValue($TDSColumns[$index] . $row, $tdsValue);
+                $sheet1->setCellValue($TDSColumns[$index] . $row, !empty($tdsValue) ? $tdsValue : '');
                 $sheet1->getStyle($TDSColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($tdsValue !== null && $tdsValue !== '') {
                     if ($tdsValue >= 0 && $tdsValue <= 5) {
@@ -124,7 +124,7 @@ class Home extends BaseController
             $PHColumns = ['J', 'K', 'L', 'M', 'N'];
             foreach ($QCData->fisikokimia as $index => $fisikokimia) {
                 $phValue = $fisikokimia->ph;
-                $sheet1->setCellValue($PHColumns[$index] . $row, $phValue);
+                $sheet1->setCellValue($PHColumns[$index] . $row, !empty($phValue) ? $phValue : '');
                 $sheet1->getStyle($PHColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($phValue !== null && $phValue !== '') {
                     if ($phValue >= 5.0 && $phValue <= 7.0) {
@@ -140,7 +140,7 @@ class Home extends BaseController
             $KERUHANColumns = ['O', 'P', 'Q', 'R', 'S'];
             foreach ($QCData->fisikokimia as $index => $fisikokimia) {
                 $keruhanValue = $fisikokimia->keruhan;
-                $sheet1->setCellValue($KERUHANColumns[$index] . $row, $keruhanValue);
+                $sheet1->setCellValue($KERUHANColumns[$index] . $row, !empty($keruhanValue) ? $keruhanValue : '');
                 $sheet1->getStyle($KERUHANColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($keruhanValue !== null && $keruhanValue !== '') {
                     if ($keruhanValue <= 1.0) {
@@ -156,7 +156,7 @@ class Home extends BaseController
             $RASAColumns = ['T', 'U', 'V', 'W', 'X'];
             foreach ($QCData->organoleptik as $index => $organoleptik) {
                 $rasaValue = strtolower($organoleptik->rasa);
-                $sheet1->setCellValue($RASAColumns[$index] . $row, $rasaValue);
+                $sheet1->setCellValue($RASAColumns[$index] . $row, !empty($rasaValue) ? $rasaValue : '');
                 $sheet1->getStyle($RASAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($rasaValue !== null && $rasaValue !== '') {
                     if ($rasaValue == "normal") {
@@ -176,7 +176,7 @@ class Home extends BaseController
             $AROMAColumns = ['Y', 'Z', 'AA', 'AB', 'AC'];
             foreach ($QCData->organoleptik as $index => $organoleptik) {
                 $aromaValue = $organoleptik->aroma;
-                $sheet1->setCellValue($AROMAColumns[$index] . $row, $rasaValue);
+                $sheet1->setCellValue($AROMAColumns[$index] . $row, !empty($rasaValue) ? $rasaValue : '');
                 $sheet1->getStyle($AROMAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($rasaValue !== null && $rasaValue !== '') {
                     if ($aromaValue <= 1.0) {
@@ -192,7 +192,7 @@ class Home extends BaseController
             $WARNAColumns = ['AD', 'AE', 'AF', 'AG', 'AH'];
             foreach ($QCData->organoleptik as $index => $organoleptik) {
                 $warnaValue = $organoleptik->warna;
-                $sheet1->setCellValue($WARNAColumns[$index] . $row, $warnaValue);
+                $sheet1->setCellValue($WARNAColumns[$index] . $row, !empty($warnaValue) ? $warnaValue : '');
                 $sheet1->getStyle($WARNAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($warnaValue !== null && $warnaValue !== '') {
                     if ($warnaValue <= 1.0) {
@@ -208,7 +208,7 @@ class Home extends BaseController
             $ALTColumns = ['AI', 'AJ', 'AK'];
             foreach ($QCData->mikrobiologi as $index => $mikrobiologi) {
                 $altValue = $mikrobiologi->alt;
-                $sheet1->setCellValue($ALTColumns[$index] . $row, $altValue);
+                $sheet1->setCellValue($ALTColumns[$index] . $row, !empty($altValue) ? $altValue : '');
                 $sheet1->getStyle($ALTColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($altValue !== null && $altValue !== '') {
                     if ($altValue <= 1.0) {
@@ -226,7 +226,7 @@ class Home extends BaseController
                 // dd($mikrobiologi->ec);
                 $ecValue = $mikrobiologi->ec ?? null;
                 if (isset($ECColumns[$index])) {
-                    $sheet1->setCellValue($ECColumns[$index] . $row, $ecValue);
+                    $sheet1->setCellValue($ECColumns[$index] . $row, !empty($ecValue) ? $ecValue : '');
                 }
                 if (isset($ECColumns[$index])) {
                     $sheet1->getStyle($ECColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
@@ -267,20 +267,20 @@ class Home extends BaseController
 
             $dataUser = $this->AuthModel->find($item['user_id']);
             $date = json_decode($item['date']);
-            $sheet3->setCellValue("A" . $row, $number);
+            $sheet3->setCellValue("A" . $row, !empty($number) ? $number : '');
             $sheet3->getStyle("A" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-            $sheet3->setCellValue("B" . $row, $date->label);
+            $sheet3->setCellValue("B" . $row, !empty($date->label) ? $date->label : '');
             $sheet3->getStyle("B" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-            $sheet3->setCellValue("C" . $row, $item['shift']);
+            $sheet3->setCellValue("C" . $row, !empty($item['shift']) ? $item['shift'] : '');
             $sheet3->getStyle("C" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-            $sheet3->setCellValue("D" . $row, $dataUser['nama']);
+            $sheet3->setCellValue("D" . $row, !empty($dataUser['nama']) ? $dataUser['nama'] : '');
             $sheet3->getStyle("D" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
 
             $QCData = json_decode($item['data'])->data;
             $TDSColumns = ['E', 'F', 'G', 'H', 'I'];
             foreach ($QCData->fisikokimia as $index => $fisikokimia) {
                 $tdsValue = $fisikokimia->tds;
-                $sheet3->setCellValue($TDSColumns[$index] . $row, $tdsValue);
+                $sheet3->setCellValue($TDSColumns[$index] . $row, !empty($tdsValue) ? $tdsValue : '');
                 $sheet3->getStyle($TDSColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($tdsValue !== null && $tdsValue !== '') {
                     if ($tdsValue >= 0 && $tdsValue <= 5) {
@@ -296,7 +296,7 @@ class Home extends BaseController
             $PHColumns = ['J', 'K', 'L', 'M', 'N'];
             foreach ($QCData->fisikokimia as $index => $fisikokimia) {
                 $phValue = $fisikokimia->ph;
-                $sheet3->setCellValue($PHColumns[$index] . $row, $phValue);
+                $sheet3->setCellValue($PHColumns[$index] . $row, !empty($phValue) ? $phValue : '');
                 $sheet3->getStyle($PHColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($phValue !== null && $phValue !== '') {
                     if ($phValue >= 5.0 && $phValue <= 7.0) {
@@ -312,7 +312,7 @@ class Home extends BaseController
             $KERUHANColumns = ['O', 'P', 'Q', 'R', 'S'];
             foreach ($QCData->fisikokimia as $index => $fisikokimia) {
                 $keruhanValue = $fisikokimia->keruhan;
-                $sheet3->setCellValue($KERUHANColumns[$index] . $row, $keruhanValue);
+                $sheet3->setCellValue($KERUHANColumns[$index] . $row, !empty($keruhanValue) ? $keruhanValue : '');
                 $sheet3->getStyle($KERUHANColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($keruhanValue !== null && $keruhanValue !== '') {
                     if ($keruhanValue <= 1.0) {
@@ -328,7 +328,7 @@ class Home extends BaseController
             $RASAColumns = ['T', 'U', 'V', 'W', 'X'];
             foreach ($QCData->organoleptik as $index => $organoleptik) {
                 $rasaValue = strtolower($organoleptik->rasa);
-                $sheet3->setCellValue($RASAColumns[$index] . $row, $rasaValue);
+                $sheet3->setCellValue($RASAColumns[$index] . $row, !empty($rasaValue) ? $rasaValue : '');
                 $sheet3->getStyle($RASAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($rasaValue !== null && $rasaValue !== '') {
                     if ($rasaValue == "normal") {
@@ -348,9 +348,9 @@ class Home extends BaseController
             $AROMAColumns = ['Y', 'Z', 'AA', 'AB', 'AC'];
             foreach ($QCData->organoleptik as $index => $organoleptik) {
                 $aromaValue = $organoleptik->aroma;
-                $sheet3->setCellValue($AROMAColumns[$index] . $row, $rasaValue);
+                $sheet3->setCellValue($AROMAColumns[$index] . $row, !empty($aromaValue) ? $aromaValue : '');
                 $sheet3->getStyle($AROMAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-                if ($rasaValue !== null && $rasaValue !== '') {
+                if ($aromaValue !== null && $aromaValue !== '') {
                     if ($aromaValue <= 1.0) {
                         $sheet3->getStyle($AROMAColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '00FF00']]]);
                     } elseif ($aromaValue >= 1.1 && $aromaValue <= 1.5) {
@@ -364,7 +364,7 @@ class Home extends BaseController
             $WARNAColumns = ['AD', 'AE', 'AF', 'AG', 'AH'];
             foreach ($QCData->organoleptik as $index => $organoleptik) {
                 $warnaValue = $organoleptik->warna;
-                $sheet3->setCellValue($WARNAColumns[$index] . $row, $warnaValue);
+                $sheet3->setCellValue($WARNAColumns[$index] . $row, !empty($warnaValue) ? $warnaValue : '');
                 $sheet3->getStyle($WARNAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($warnaValue !== null && $warnaValue !== '') {
                     if ($warnaValue <= 1.0) {
@@ -380,7 +380,7 @@ class Home extends BaseController
             $ALTColumns = ['AI', 'AJ', 'AK'];
             foreach ($QCData->mikrobiologi as $index => $mikrobiologi) {
                 $altValue = $mikrobiologi->alt;
-                $sheet3->setCellValue($ALTColumns[$index] . $row, $altValue);
+                $sheet3->setCellValue($ALTColumns[$index] . $row, !empty($altValue) ? $altValue : '');
                 $sheet3->getStyle($ALTColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($altValue !== null && $altValue !== '') {
                     if ($altValue <= 1.0) {
@@ -398,7 +398,7 @@ class Home extends BaseController
                 // dd($mikrobiologi->ec);
                 $ecValue = $mikrobiologi->ec ?? null;
                 if (isset($ECColumns[$index])) {
-                    $sheet3->setCellValue($ECColumns[$index] . $row, $ecValue);
+                    $sheet3->setCellValue($ECColumns[$index] . $row, !empty($ecValue) ? $ecValue : '');
                 }
                 if (isset($ECColumns[$index])) {
                     $sheet3->getStyle($ECColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
@@ -416,7 +416,7 @@ class Home extends BaseController
 
             $STATUSColumns = ['AN'];
             $statusValue = $item['status'];
-            $sheet3->setCellValue($STATUSColumns[0] . $row, $statusValue === '1' ? 'Approval' : ($statusValue === '2' ? 'Reject' : ''));
+            $sheet3->setCellValue($STATUSColumns[0] . $row, !empty($statusValue) ? ($statusValue === '1' ? 'Approval' : ($statusValue === '2' ? 'Reject' : '')) : '');
             $sheet3->getStyle($STATUSColumns[0] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
             if ($statusValue === '1') {
                 $sheet3->getStyle($STATUSColumns[0] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '00FF00']]]);
@@ -438,20 +438,20 @@ class Home extends BaseController
 
             $dataUser = $this->AuthModel->find($item['user_id']);
             $date = json_decode($item['date']);
-            $sheet2->setCellValue("A" . $row, $number);
+            $sheet2->setCellValue("A" . $row, !empty($number) ? $number : '');
             $sheet2->getStyle("A" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-            $sheet2->setCellValue("B" . $row, $date->label);
+            $sheet2->setCellValue("B" . $row, !empty($date->label) ? $date->label : '');
             $sheet2->getStyle("B" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-            $sheet2->setCellValue("C" . $row, $item['shift']);
+            $sheet2->setCellValue("C" . $row, !empty($item['shift']) ? $item['shift'] : '');
             $sheet2->getStyle("C" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-            $sheet2->setCellValue("D" . $row, $dataUser['nama']);
+            $sheet2->setCellValue("D" . $row, !empty($dataUser['nama']) ? $dataUser['nama'] : '');
             $sheet2->getStyle("D" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
 
             $QCData = json_decode($item['data'])->data;
             $TDSColumns = ['E', 'F', 'G', 'H', 'I'];
             foreach ($QCData->fisikokimia as $index => $fisikokimia) {
                 $tdsValue = $fisikokimia->tds;
-                $sheet2->setCellValue($TDSColumns[$index] . $row, $tdsValue);
+                $sheet2->setCellValue($TDSColumns[$index] . $row, !empty($tdsValue) ? $tdsValue : '');
                 $sheet2->getStyle($TDSColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($tdsValue !== null && $tdsValue !== '') {
                     if ($tdsValue >= 0 && $tdsValue <= 5) {
@@ -467,7 +467,7 @@ class Home extends BaseController
             $PHColumns = ['J', 'K', 'L', 'M', 'N'];
             foreach ($QCData->fisikokimia as $index => $fisikokimia) {
                 $phValue = $fisikokimia->ph;
-                $sheet2->setCellValue($PHColumns[$index] . $row, $phValue);
+                $sheet2->setCellValue($PHColumns[$index] . $row, !empty($phValue) ? $phValue : '');
                 $sheet2->getStyle($PHColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($phValue !== null && $phValue !== '') {
                     if ($phValue >= 5.0 && $phValue <= 7.0) {
@@ -483,7 +483,7 @@ class Home extends BaseController
             $KERUHANColumns = ['O', 'P', 'Q', 'R', 'S'];
             foreach ($QCData->fisikokimia as $index => $fisikokimia) {
                 $keruhanValue = $fisikokimia->keruhan;
-                $sheet2->setCellValue($KERUHANColumns[$index] . $row, $keruhanValue);
+                $sheet2->setCellValue($KERUHANColumns[$index] . $row, !empty($keruhanValue) ? $keruhanValue : '');
                 $sheet2->getStyle($KERUHANColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($keruhanValue !== null && $keruhanValue !== '') {
                     if ($keruhanValue <= 1.0) {
@@ -499,7 +499,7 @@ class Home extends BaseController
             $RASAColumns = ['T', 'U', 'V', 'W', 'X'];
             foreach ($QCData->organoleptik as $index => $organoleptik) {
                 $rasaValue = strtolower($organoleptik->rasa);
-                $sheet2->setCellValue($RASAColumns[$index] . $row, $rasaValue);
+                $sheet2->setCellValue($RASAColumns[$index] . $row, !empty($rasaValue) ? $rasaValue : '');
                 $sheet2->getStyle($RASAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($rasaValue !== null && $rasaValue !== '') {
                     if ($rasaValue == "normal") {
@@ -519,9 +519,9 @@ class Home extends BaseController
             $AROMAColumns = ['Y', 'Z', 'AA', 'AB', 'AC'];
             foreach ($QCData->organoleptik as $index => $organoleptik) {
                 $aromaValue = $organoleptik->aroma;
-                $sheet2->setCellValue($AROMAColumns[$index] . $row, $rasaValue);
+                $sheet2->setCellValue($AROMAColumns[$index] . $row, !empty($aromaValue) ? $aromaValue : '');
                 $sheet2->getStyle($AROMAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-                if ($rasaValue !== null && $rasaValue !== '') {
+                if ($aromaValue !== null && $aromaValue !== '') {
                     if ($aromaValue <= 1.0) {
                         $sheet2->getStyle($AROMAColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '00FF00']]]);
                     } elseif ($aromaValue >= 1.1 && $aromaValue <= 1.5) {
@@ -535,7 +535,7 @@ class Home extends BaseController
             $WARNAColumns = ['AD', 'AE', 'AF', 'AG', 'AH'];
             foreach ($QCData->organoleptik as $index => $organoleptik) {
                 $warnaValue = $organoleptik->warna;
-                $sheet2->setCellValue($WARNAColumns[$index] . $row, $warnaValue);
+                $sheet2->setCellValue($WARNAColumns[$index] . $row, !empty($warnaValue) ? $warnaValue : '');
                 $sheet2->getStyle($WARNAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($warnaValue !== null && $warnaValue !== '') {
                     if ($warnaValue <= 1.0) {
@@ -551,7 +551,7 @@ class Home extends BaseController
             $ALTColumns = ['AI', 'AJ', 'AK'];
             foreach ($QCData->mikrobiologi as $index => $mikrobiologi) {
                 $altValue = $mikrobiologi->alt;
-                $sheet2->setCellValue($ALTColumns[$index] . $row, $altValue);
+                $sheet2->setCellValue($ALTColumns[$index] . $row, !empty($altValue) ? $altValue : '');
                 $sheet2->getStyle($ALTColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($altValue !== null && $altValue !== '') {
                     if ($altValue <= 1.0) {
@@ -569,7 +569,7 @@ class Home extends BaseController
                 // dd($mikrobiologi->ec);
                 $ecValue = $mikrobiologi->ec ?? null;
                 if (isset($ECColumns[$index])) {
-                    $sheet2->setCellValue($ECColumns[$index] . $row, $ecValue);
+                    $sheet2->setCellValue($ECColumns[$index] . $row, !empty($ecValue) ? $ecValue : '');
                 }
                 if (isset($ECColumns[$index])) {
                     $sheet2->getStyle($ECColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
@@ -587,7 +587,7 @@ class Home extends BaseController
 
             $STATUSColumns = ['AN'];
             $statusValue = $item['status'];
-            $sheet2->setCellValue($STATUSColumns[0] . $row, $statusValue === '1' ? 'Approval' : ($statusValue === '2' ? 'Reject' : ''));
+            $sheet2->setCellValue($STATUSColumns[0] . $row, !empty($statusValue) ? ($statusValue === '1' ? 'Approval' : ($statusValue === '2' ? 'Reject' : '')) : '');
             $sheet2->getStyle($STATUSColumns[0] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
             if ($statusValue === '1') {
                 $sheet2->getStyle($STATUSColumns[0] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '00FF00']]]);
@@ -609,20 +609,20 @@ class Home extends BaseController
 
             $dataUser = $this->AuthModel->find($item['user_id']);
             $date = json_decode($item['date']);
-            $sheet2->setCellValue("A" . $row, $number);
+            $sheet2->setCellValue("A" . $row, !empty($number) ? $number : '');
             $sheet2->getStyle("A" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-            $sheet2->setCellValue("B" . $row, $date->label);
+            $sheet2->setCellValue("B" . $row, !empty($date->label) ? $date->label : '');
             $sheet2->getStyle("B" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-            $sheet2->setCellValue("C" . $row, $item['shift']);
+            $sheet2->setCellValue("C" . $row, !empty($item['shift']) ? $item['shift'] : '');
             $sheet2->getStyle("C" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-            $sheet2->setCellValue("D" . $row, $dataUser['nama']);
+            $sheet2->setCellValue("D" . $row, !empty($dataUser['nama']) ? $dataUser['nama'] : '');
             $sheet2->getStyle("D" . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
 
             $QCData = json_decode($item['data'])->data;
             $TDSColumns = ['E', 'F', 'G', 'H', 'I'];
             foreach ($QCData->fisikokimia as $index => $fisikokimia) {
                 $tdsValue = $fisikokimia->tds;
-                $sheet2->setCellValue($TDSColumns[$index] . $row, $tdsValue);
+                $sheet2->setCellValue($TDSColumns[$index] . $row, !empty($tdsValue) ? $tdsValue : '');
                 $sheet2->getStyle($TDSColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($tdsValue !== null && $tdsValue !== '') {
                     if ($tdsValue >= 0 && $tdsValue <= 5) {
@@ -638,7 +638,7 @@ class Home extends BaseController
             $PHColumns = ['J', 'K', 'L', 'M', 'N'];
             foreach ($QCData->fisikokimia as $index => $fisikokimia) {
                 $phValue = $fisikokimia->ph;
-                $sheet2->setCellValue($PHColumns[$index] . $row, $phValue);
+                $sheet2->setCellValue($PHColumns[$index] . $row, !empty($phValue) ? $phValue : '');
                 $sheet2->getStyle($PHColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($phValue !== null && $phValue !== '') {
                     if ($phValue >= 5.0 && $phValue <= 7.0) {
@@ -654,7 +654,7 @@ class Home extends BaseController
             $KERUHANColumns = ['O', 'P', 'Q', 'R', 'S'];
             foreach ($QCData->fisikokimia as $index => $fisikokimia) {
                 $keruhanValue = $fisikokimia->keruhan;
-                $sheet2->setCellValue($KERUHANColumns[$index] . $row, $keruhanValue);
+                $sheet2->setCellValue($KERUHANColumns[$index] . $row, !empty($keruhanValue) ? $keruhanValue : '');
                 $sheet2->getStyle($KERUHANColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($keruhanValue !== null && $keruhanValue !== '') {
                     if ($keruhanValue <= 1.0) {
@@ -670,7 +670,7 @@ class Home extends BaseController
             $RASAColumns = ['T', 'U', 'V', 'W', 'X'];
             foreach ($QCData->organoleptik as $index => $organoleptik) {
                 $rasaValue = strtolower($organoleptik->rasa);
-                $sheet2->setCellValue($RASAColumns[$index] . $row, $rasaValue);
+                $sheet2->setCellValue($RASAColumns[$index] . $row, !empty($rasaValue) ? $rasaValue : '');
                 $sheet2->getStyle($RASAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($rasaValue !== null && $rasaValue !== '') {
                     if ($rasaValue == "normal") {
@@ -690,9 +690,9 @@ class Home extends BaseController
             $AROMAColumns = ['Y', 'Z', 'AA', 'AB', 'AC'];
             foreach ($QCData->organoleptik as $index => $organoleptik) {
                 $aromaValue = $organoleptik->aroma;
-                $sheet2->setCellValue($AROMAColumns[$index] . $row, $rasaValue);
+                $sheet2->setCellValue($AROMAColumns[$index] . $row, !empty($aromaValue) ? $aromaValue : '');
                 $sheet2->getStyle($AROMAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
-                if ($rasaValue !== null && $rasaValue !== '') {
+                if ($aromaValue !== null && $aromaValue !== '') {
                     if ($aromaValue <= 1.0) {
                         $sheet2->getStyle($AROMAColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '00FF00']]]);
                     } elseif ($aromaValue >= 1.1 && $aromaValue <= 1.5) {
@@ -706,7 +706,7 @@ class Home extends BaseController
             $WARNAColumns = ['AD', 'AE', 'AF', 'AG', 'AH'];
             foreach ($QCData->organoleptik as $index => $organoleptik) {
                 $warnaValue = $organoleptik->warna;
-                $sheet2->setCellValue($WARNAColumns[$index] . $row, $warnaValue);
+                $sheet2->setCellValue($WARNAColumns[$index] . $row, !empty($warnaValue) ? $warnaValue : '');
                 $sheet2->getStyle($WARNAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($warnaValue !== null && $warnaValue !== '') {
                     if ($warnaValue <= 1.0) {
@@ -722,7 +722,7 @@ class Home extends BaseController
             $ALTColumns = ['AI', 'AJ', 'AK'];
             foreach ($QCData->mikrobiologi as $index => $mikrobiologi) {
                 $altValue = $mikrobiologi->alt;
-                $sheet2->setCellValue($ALTColumns[$index] . $row, $altValue);
+                $sheet2->setCellValue($ALTColumns[$index] . $row, !empty($altValue) ? $altValue : '');
                 $sheet2->getStyle($ALTColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($altValue !== null && $altValue !== '') {
                     if ($altValue <= 1.0) {
@@ -740,7 +740,7 @@ class Home extends BaseController
                 // dd($mikrobiologi->ec);
                 $ecValue = $mikrobiologi->ec ?? null;
                 if (isset($ECColumns[$index])) {
-                    $sheet2->setCellValue($ECColumns[$index] . $row, $ecValue);
+                    $sheet2->setCellValue($ECColumns[$index] . $row, !empty($ecValue) ? $ecValue : '');
                 }
                 if (isset($ECColumns[$index])) {
                     $sheet2->getStyle($ECColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
@@ -758,7 +758,7 @@ class Home extends BaseController
 
             $STATUSColumns = ['AN'];
             $statusValue = $item['status'];
-            $sheet2->setCellValue($STATUSColumns[0] . $row, $statusValue === '1' ? 'Approval' : ($statusValue === '2' ? 'Reject' : ''));
+            $sheet2->setCellValue($STATUSColumns[0] . $row, !empty($statusValue) ? ($statusValue === '1' ? 'Approval' : ($statusValue === '2' ? 'Reject' : '')) : '');
             $sheet2->getStyle($STATUSColumns[0] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
             if ($statusValue === '1') {
                 $sheet2->getStyle($STATUSColumns[0] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '00FF00']]]);
@@ -771,7 +771,6 @@ class Home extends BaseController
         }
 
         // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $filename = 'QC Air ' . date('Y-m-d') . '.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
