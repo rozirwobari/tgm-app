@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\AuthModel;
-use App\Models\QcAirCupModel;
+use App\Models\QcAirGalonModel;
 use App\Models\RoleModel;
 
 class QcAirGalon extends BaseController
@@ -63,11 +63,11 @@ class QcAirGalon extends BaseController
         
         // dd($data_user);
         $data = [
-            'title' => 'QC Air Cup',
+            'title' => 'QC Air Galon',
             'data_user' => $data_user,
         ];
-        $data['qc_air_cup'] = $this->QCModel->orderBy('id', 'DESC')->findAll();
-        return view('dashboard/AirCup/index', $data);
+        $data['qc_air_galon'] = $this->QCModel->orderBy('id', 'DESC')->findAll();
+        return view('dashboard/AirGalon/index', $data);
     }
 
     public function input()
@@ -81,13 +81,13 @@ class QcAirGalon extends BaseController
         }
 
         $data = [
-            'title' => 'QC Air Cup',
+            'title' => 'QC Air Galon',
         ];
-        return view('dashboard/AirCup/input', $data);
+        return view('dashboard/AirGalon/input', $data);
     }
     
 
-    public function QCAirCupInput()
+    public function QCAirGalonInput()
     {
         $rules = [];
         $errors = [];
@@ -175,7 +175,7 @@ class QcAirGalon extends BaseController
         ];
         $this->QCModel->insert($data);
 
-        return redirect()->to(base_url('dashboard/qc_air_cup'))->with('alert', [
+        return redirect()->to(base_url('dashboard/qc_air_galon'))->with('alert', [
             'type' => 'success',
             'message' => 'Data berhasil disimpan.',
             'title' => 'Success',
@@ -197,13 +197,13 @@ class QcAirGalon extends BaseController
                     ->join('role', 'users.role = role.id')
                     ->find($this->session->get('id'));
         $data = [
-            'title' => 'Detail QC Air Cup',
+            'title' => 'Detail QC Air Galon',
             'details' => $getData,
             'data_user' => $dataUser,
             'id' => $id,
             'status' => $getData['status'],
         ];
-        return view('dashboard/AirCup/detail', $data);
+        return view('dashboard/AirGalon/detail', $data);
     }
 
     public function QCAirUpdate($id)
@@ -217,7 +217,7 @@ class QcAirGalon extends BaseController
         }
         $getData = $this->QCModel->find($id);
         if (!$getData) {
-            return redirect()->to(base_url('/dashboard/AirCup/index'))->with('alert', [
+            return redirect()->to(base_url('/dashboard/AirGalon/index'))->with('alert', [
                 'type' => 'danger',
                 'message' => 'Data tidak ditemukan.',
                 'title' => 'Error',
@@ -261,7 +261,7 @@ class QcAirGalon extends BaseController
 
         $this->QCModel->update($id, $data);
 
-        return redirect()->to(base_url('dashboard/qc_air_cup'))->with('alert', [
+        return redirect()->to(base_url('dashboard/qc_air_galon'))->with('alert', [
             'type' => 'success',
             'message' => 'Data berhasil diupdate.',
             'title' => 'Success',
@@ -276,7 +276,7 @@ class QcAirGalon extends BaseController
 
         $this->QCModel->update($id, $data);
 
-        return redirect()->to(base_url('dashboard/qc_air_cup'))->with('alert', [
+        return redirect()->to(base_url('dashboard/qc_air_galon'))->with('alert', [
             'type' => 'success',
             'message' => 'Data berhasil ditolak.',
             'title' => 'Data Ditolak',
@@ -286,7 +286,7 @@ class QcAirGalon extends BaseController
     function QCAirDelete($id)
     {
         $this->QCModel->delete($id);
-        return redirect()->to(base_url('dashboard/qc_air_cup'))->with('alert', [
+        return redirect()->to(base_url('dashboard/qc_air_galon'))->with('alert', [
             'type' => 'success',
             'message' => 'Data berhasil dihapus.',
             'title' => 'Data Dihapus',
@@ -301,7 +301,7 @@ class QcAirGalon extends BaseController
 
         $this->QCModel->update($id, $data);
 
-        return redirect()->to(base_url('dashboard/qc_air_cup'))->with('alert', [
+        return redirect()->to(base_url('dashboard/qc_air_galon'))->with('alert', [
             'type' => 'success',
             'message' => 'Data berhasil disetujui.',
             'title' => 'Data Disetujui',
@@ -312,7 +312,7 @@ class QcAirGalon extends BaseController
     {
         $data = $this->QCModel->findAll();
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('asset/excel/qc_air_template.xlsx');
-        $sheet = $spreadsheet->getActiveSheet()->setTitle("QC Air Cup");
+        $sheet = $spreadsheet->getActiveSheet()->setTitle("QC Air Galon");
         $row = 5;
         $number = 1;
         foreach ($data as $item) {
@@ -480,7 +480,7 @@ class QcAirGalon extends BaseController
             $number++;
         }
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-        $filename = 'qc_air_cup_' . date('Y-m-d') . '.xlsx';
+        $filename = 'qc_air_galon_' . date('Y-m-d') . '.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
