@@ -5,17 +5,17 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\AuthModel;
-use App\Models\QcAirBotolModel;
+use App\Models\QcAirCupModel;
 use App\Models\RoleModel;
 
-class QcAirBotol extends BaseController
+class QcAirGalon extends BaseController
 {
     public function __construct()
     {
         $this->session = \Config\Services::session();
         $this->validation = \Config\Services::validation();
         $this->AuthModel = new AuthModel();
-        $this->QCModel = new QcAirBotolModel();
+        $this->QCModel = new QcAirGalonModel();
         $this->RoleModel = new RoleModel();
     }
 
@@ -63,11 +63,11 @@ class QcAirBotol extends BaseController
         
         // dd($data_user);
         $data = [
-            'title' => 'QC Air Botol',
+            'title' => 'QC Air Cup',
             'data_user' => $data_user,
         ];
-        $data['qc_air_botol'] = $this->QCModel->orderBy('id', 'DESC')->findAll();
-        return view('dashboard/AirBotol/qc_air_botol', $data);
+        $data['qc_air_cup'] = $this->QCModel->orderBy('id', 'DESC')->findAll();
+        return view('dashboard/AirCup/index', $data);
     }
 
     public function input()
@@ -81,44 +81,13 @@ class QcAirBotol extends BaseController
         }
 
         $data = [
-            'title' => 'Fisiko Kimia',
+            'title' => 'QC Air Cup',
         ];
-        return view('dashboard/AirBotol/input', $data);
+        return view('dashboard/AirCup/input', $data);
     }
     
-    public function organoleptik()
-    {
-        if (!$this->session->get('isLoggedIn')) {
-            return redirect()->to(base_url('/'))->with('alert', [
-                'type' => 'warning',
-                'message' => 'Anda harus login terlebih dahulu!',
-                'title' => 'Permission Denied',
-            ]);
-        }
 
-        $data = [
-            'title' => 'Organoleptik',
-        ];
-        return view('dashboard/AirBotol/organoleptik', $data);
-    }
-
-    public function mikrobiologi()
-    {
-        if (!$this->session->get('isLoggedIn')) {
-            return redirect()->to(base_url('/'))->with('alert', [
-                'type' => 'warning',
-                'message' => 'Anda harus login terlebih dahulu!',
-                'title' => 'Permission Denied',
-            ]);
-        }
-
-        $data = [
-            'title' => 'Mikrobiologi',
-        ];
-        return view('dashboard/AirBotol/mikrobiologi', $data);
-    }
-
-    public function QCAirBotolFisikokimia()
+    public function QCAirCupInput()
     {
         $rules = [];
         $errors = [];
@@ -206,14 +175,14 @@ class QcAirBotol extends BaseController
         ];
         $this->QCModel->insert($data);
 
-        return redirect()->to(base_url('/dashboard/qc_air_botol'))->with('alert', [
+        return redirect()->to(base_url('dashboard/qc_air_cup'))->with('alert', [
             'type' => 'success',
             'message' => 'Data berhasil disimpan.',
             'title' => 'Success',
         ]);
     }
     
-    public function QCAirBotolDetail($id)
+    public function QCAirDetail($id)
     {
         if (!$this->session->get('isLoggedIn')) {
             return redirect()->to(base_url('/'))->with('alert', [
@@ -227,27 +196,17 @@ class QcAirBotol extends BaseController
                     ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
                     ->join('role', 'users.role = role.id')
                     ->find($this->session->get('id'));
-
-        // dd([
-        //     $this->session->get('id'),
-        //     $getData,
-        //     $dataUser,
-        //     $getData['user_id'],
-        //     $dataUser['user_id'],
-        // ]);
-        
-        // dd(json_decode($getData['data'])->data->fisikokimia[1]->tds);
         $data = [
-            'title' => 'Detail QC Air Botol',
+            'title' => 'Detail QC Air Cup',
             'details' => $getData,
             'data_user' => $dataUser,
             'id' => $id,
             'status' => $getData['status'],
         ];
-        return view('dashboard/AirBotol/detail', $data);
+        return view('dashboard/AirCup/detail', $data);
     }
 
-    public function QCAirBotolUpdate($id)
+    public function QCAirUpdate($id)
     {
         if (!$this->session->get('isLoggedIn')) {
             return redirect()->to(base_url('/'))->with('alert', [
@@ -258,7 +217,7 @@ class QcAirBotol extends BaseController
         }
         $getData = $this->QCModel->find($id);
         if (!$getData) {
-            return redirect()->to(base_url('/dashboard/qc_air_botol'))->with('alert', [
+            return redirect()->to(base_url('/dashboard/AirCup/index'))->with('alert', [
                 'type' => 'danger',
                 'message' => 'Data tidak ditemukan.',
                 'title' => 'Error',
@@ -302,14 +261,14 @@ class QcAirBotol extends BaseController
 
         $this->QCModel->update($id, $data);
 
-        return redirect()->to(base_url('/dashboard/qc_air_botol'))->with('alert', [
+        return redirect()->to(base_url('dashboard/qc_air_cup'))->with('alert', [
             'type' => 'success',
             'message' => 'Data berhasil diupdate.',
             'title' => 'Success',
         ]);
     }
 
-    function QCAirBotolReject($id)
+    function QCAirReject($id)
     {
         $data = [
             'status' => '2',
@@ -317,24 +276,24 @@ class QcAirBotol extends BaseController
 
         $this->QCModel->update($id, $data);
 
-        return redirect()->to(base_url('/dashboard/qc_air_botol'))->with('alert', [
+        return redirect()->to(base_url('dashboard/qc_air_cup'))->with('alert', [
             'type' => 'success',
             'message' => 'Data berhasil ditolak.',
             'title' => 'Data Ditolak',
         ]);
     }
 
-    function QCAirBotolDelete($id)
+    function QCAirDelete($id)
     {
         $this->QCModel->delete($id);
-        return redirect()->to(base_url('/dashboard/qc_air_botol'))->with('alert', [
+        return redirect()->to(base_url('dashboard/qc_air_cup'))->with('alert', [
             'type' => 'success',
             'message' => 'Data berhasil dihapus.',
             'title' => 'Data Dihapus',
         ]);
     }
 
-    function QCAirBotolApprove($id)
+    function QCAirApprove($id)
     {
         $data = [
             'status' => '1',
@@ -342,18 +301,18 @@ class QcAirBotol extends BaseController
 
         $this->QCModel->update($id, $data);
 
-        return redirect()->to(base_url('/dashboard/qc_air_botol'))->with('alert', [
+        return redirect()->to(base_url('dashboard/qc_air_cup'))->with('alert', [
             'type' => 'success',
             'message' => 'Data berhasil disetujui.',
             'title' => 'Data Disetujui',
         ]);
     }
 
-    function QCAirBotolExport()
+    function QCAirExport()
     {
         $data = $this->QCModel->findAll();
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('asset/excel/qc_air_template.xlsx');
-        $sheet = $spreadsheet->getActiveSheet()->setTitle("QC Air Botol");
+        $sheet = $spreadsheet->getActiveSheet()->setTitle("QC Air Cup");
         $row = 5;
         $number = 1;
         foreach ($data as $item) {
@@ -521,7 +480,7 @@ class QcAirBotol extends BaseController
             $number++;
         }
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-        $filename = 'qc_air_botol_' . date('Y-m-d') . '.xlsx';
+        $filename = 'qc_air_cup_' . date('Y-m-d') . '.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header('Cache-Control: max-age=0');

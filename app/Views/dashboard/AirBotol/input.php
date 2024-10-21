@@ -14,10 +14,37 @@
     </div>
 </div>
 
+
+<form action="<?= base_url('/dashboard/qc_air_botol/qc_air_botol_fisikokimia') ?>" method="post">
+
+<div class="rzw-box-content">
+        <div class="card-body">
+            <div class="container text-center">
+                <h3>Shift</h3>
+            </div>
+            <div class="input-group my-3">
+                <select class="form-control rzw-input <?= session('input.shift') ? 'is-invalid' : '' ?>"
+                    name="shift" id="shift">
+                    <option value="">Pilih Shift</option>
+                    <option value="1" <?= old('shift') == '1' ? 'selected' : '' ?> >1</option>
+                    <option value="2" <?= old('shift') == '2' ? 'selected' : '' ?> >2</option>
+                    <option value="3" <?= old('shift') == '3' ? 'selected' : '' ?> >3</option>
+                </select>
+                <div class="input-group-prepend">
+                    <span class="rzw-icon-input" style="z-index: 5;">
+                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-cursor-text"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12h4" /><path d="M9 4a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3" /><path d="M15 4a3 3 0 0 0 -3 3v10a3 3 0 0 0 3 3" /></svg>
+                    </span>
+                </div>
+                <div id="validationServerUsernameFeedback" class="invalid-feedback text-start">
+                    <?= session('input.shift') ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <div class="rzw-box-content" style="padding: 0px; margin-top: 15px;">
     <p class="p-2" style="font-weight: 600;">Fisiko Kimia</p>
 </div>
-<form action="<?= base_url('/dashboard/qc_air_botol/qc_air_botol_fisikokimia') ?>" method="post">
     <div class="rzw-box-content">
         <div class="card-body">
             <div class="container text-center">

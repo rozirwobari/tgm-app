@@ -17,7 +17,8 @@
                     Air Botol</a>
             </div>
             <div class="col-6">
-                <a href="<?= base_url('logout') ?>" class="btn btn-primary w-100 rzw-btn-content">QC Air Cup</a>
+                <a href="<?= base_url('/dashboard/qc_air_cup') ?>" class="btn btn-primary w-100 rzw-btn-content">QC
+                    Air Cup</a>
             </div>
             <div class="col-6 pt-3">
                 <a href="<?= base_url('logout') ?>" class="btn btn-primary w-100 rzw-btn-content">QC Air Galon</a>

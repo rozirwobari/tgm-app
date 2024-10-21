@@ -3,7 +3,7 @@
 <?= $this->section('content') ?>
 <div class="rzw-container" style="display: flex;">
     <div class="rzw-box-content" style="flex: 0 0 15%; padding: 1px; border-radius: 10px 0 0 10px;">
-        <a href="<?= base_url('/dashboard/qc_air_botol') ?>">
+        <a href="<?= base_url('/dashboard/qc_air_cup') ?>">
             <h5 style="font-weight: 600; padding-top: 11%;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -15,7 +15,7 @@
         </a>
     </div>
     <div class="rzw-box-content" style="flex: 0 0 85%; padding: 1px; border-radius: 0 10px 10px 0;">
-        <h5 class="pt-2" style="font-weight: 600;">QC Air Botol</h5>
+        <h5 class="pt-2" style="font-weight: 600;"><?= $title ?></h5>
     </div>
 </div>
 
@@ -131,7 +131,7 @@
         </div>
     </div>
 </div>
-<form action="<?= base_url('/dashboard/qc_air_botol/update/'.$id) ?>" method="post">
+<form action="<?= base_url('/dashboard/qc_air_cup/update/'.$id) ?>" method="post">
 
 <div class="rzw-box-content">
         <div class="card-body">
@@ -494,7 +494,7 @@
     <div class="rzw-box-content">
         <div class="row">
             <div class="col-6">
-                <a class="btn btn-primary w-100" href="<?= base_url('dashboard/qc_air_botol/reject/'.$id) ?>"
+                <a class="btn btn-primary w-100" href="<?= base_url('dashboard/qc_air_cup/reject/'.$id) ?>"
                     style="background-color: red; border: none; border-radius: 8px; color: black; color: white;">Reject</a>
             </div>
             <div class="col-6">
@@ -504,7 +504,7 @@
         </div>
         <div class="row mt-3">
             <div class="col-12">
-                <a class="btn btn-primary w-100" href="<?= base_url('dashboard/qc_air_botol/approve/'.$id) ?>"
+                <a class="btn btn-primary w-100" href="<?= base_url('dashboard/qc_air_cup/approve/'.$id) ?>"
                     style="background-color: green; border: none; border-radius: 8px;">Approve</a>
             </div>
         </div>
@@ -524,7 +524,7 @@
             confirmButtonText: "Ya, Hapus Data!"
             }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = "<?= base_url('dashboard/qc_air_botol/delete/') ?>" + id;
+                window.location.href = "<?= base_url('dashboard/qc_air_cup/delete/') ?>" + id;
             }
         });
     }

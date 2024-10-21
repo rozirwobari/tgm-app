@@ -14,17 +14,36 @@ $routes->group('dashboard', function($routes) {
     $routes->get('/', 'Home::index');
     $routes->group('qc_air_botol', function($routes) {
         $routes->get('/', 'QcAirBotol::index');
-        $routes->get('fisikokimia', 'QcAirBotol::fisikokimia');
-        $routes->get('organoleptik', 'QcAirBotol::organoleptik');
-        $routes->get('mikrobiologi', 'QcAirBotol::mikrobiologi');
-        $routes->post('qc_air_botol_fisikokimia', 'QcAirBotol::QCAirBotolFisikokimia');
-        $routes->post('qc_air_botol_organoleptik', 'QcAirBotol::QCAirBotolOrganoleptik');
-        $routes->post('qc_air_botol_mikrobiologi', 'QcAirBotol::QCAirBotolMikrobiologi');
+        $routes->get('input', 'QcAirBotol::input');
         $routes->get('detail/(:num)', 'QcAirBotol::QCAirBotolDetail/$1');
         $routes->post('update/(:num)', 'QcAirBotol::QCAirBotolUpdate/$1');
         $routes->get('reject/(:num)', 'QcAirBotol::QCAirBotolReject/$1');
         $routes->get('delete/(:num)', 'QcAirBotol::QCAirBotolDelete/$1');
         $routes->get('approve/(:num)', 'QcAirBotol::QCAirBotolApprove/$1');
         $routes->get('export', 'QcAirBotol::QCAirBotolExport');
+    });
+
+    $routes->group('qc_air_cup', function($routes) {
+        $routes->get('/', 'QcAirCup::index');
+        $routes->get('input', 'QcAirCup::input');
+        $routes->get('detail/(:num)', 'QcAirCup::QCAirDetail/$1');
+        $routes->post('input', 'QcAirCup::QCAirCupInput');
+        $routes->post('update/(:num)', 'QcAirCup::QCAirUpdate/$1');
+        $routes->get('reject/(:num)', 'QcAirCup::QCAirReject/$1');
+        $routes->get('delete/(:num)', 'QcAirCup::QCAirDelete/$1');
+        $routes->get('approve/(:num)', 'QcAirCup::QCAirApprove/$1');
+        $routes->get('export', 'QcAirCup::QCAirExport');
+    });
+
+    $routes->group('qc_air_galon', function($routes) {
+        $routes->get('/', 'QcAirGalon::index');
+        $routes->get('input', 'QcAirGalon::input');
+        $routes->get('detail/(:num)', 'QcAirGalon::QCAirDetail/$1');
+        $routes->post('input', 'QcAirGalon::QCAirGalonInput');
+        $routes->post('update/(:num)', 'QcAirGalon::QCAirUpdate/$1');
+        $routes->get('reject/(:num)', 'QcAirGalon::QCAirReject/$1');
+        $routes->get('delete/(:num)', 'QcAirGalon::QCAirDelete/$1');
+        $routes->get('approve/(:num)', 'QcAirGalon::QCAirApprove/$1');
+        $routes->get('export', 'QcAirGalon::QCAirExport');
     });
 });
