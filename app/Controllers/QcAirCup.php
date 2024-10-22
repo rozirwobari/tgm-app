@@ -220,12 +220,12 @@ class QcAirCup extends BaseController
 
 
         $getData = $this->QCModel->find($id);
-        $data_user = $this->AuthModel
+        $dataUser = $this->AuthModel
                 ->select('users.id as user_id, users.nama, role.id as role_id, role.name, role.label')
                 ->join('role', 'users.role = role.id')
                 ->find($this->session->get('id'));
 
-        if (empty($data_user)) {
+        if (empty($dataUser)) {
             $this->session->destroy();
             return redirect()->to(base_url())->with('alert', [
                 'type' => 'error',

@@ -173,7 +173,7 @@ class QcAirBotol extends BaseController
         return view('dashboard/AirBotol/mikrobiologi', $data);
     }
 
-    public function QCAirBotolFisikokimia()
+    public function QCAirBotolInput()
     {
         $rules = [];
         $errors = [];

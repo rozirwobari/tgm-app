@@ -15,7 +15,7 @@
 </div>
 
 
-<form action="<?= base_url('/dashboard/qc_air_botol/qc_air_botol_fisikokimia') ?>" method="post">
+<form action="<?= base_url('/dashboard/qc_air_botol/input') ?>" method="post">
 
 <div class="rzw-box-content">
         <div class="card-body">

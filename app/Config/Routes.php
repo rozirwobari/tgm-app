@@ -25,6 +25,7 @@ $routes->group('dashboard', function($routes) {
     $routes->group('qc_air_botol', function($routes) {
         $routes->get('/', 'QcAirBotol::index');
         $routes->get('input', 'QcAirBotol::input');
+        $routes->post('input', 'QcAirBotol::QCAirBotolInput');
         $routes->get('detail/(:num)', 'QcAirBotol::QCAirBotolDetail/$1');
         $routes->post('update/(:num)', 'QcAirBotol::QCAirBotolUpdate/$1');
         $routes->get('reject/(:num)', 'QcAirBotol::QCAirBotolReject/$1');
