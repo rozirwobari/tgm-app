@@ -161,7 +161,7 @@ class Home extends BaseController
             ]);
         }
         // $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('asset/excel/qc_air_all_template.xlsx');
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(FCPATH . 'data/public/asset/excel/qc_air_all_template.xlsx');
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('asset/excel/qc_air_all_template.xlsx');
         
         
         $data = $this->QCAirBotolModel->findAll();

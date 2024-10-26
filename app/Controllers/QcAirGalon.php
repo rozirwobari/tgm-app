@@ -362,7 +362,7 @@ class QcAirGalon extends BaseController
     function QCAirExport()
     {
         $data = $this->QCModel->findAll();
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(FCPATH . 'data/public/asset/excel/qc_air_template.xlsx');
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('asset/excel/qc_air_template.xlsx');
         $sheet = $spreadsheet->getActiveSheet()->setTitle("QC Air Galon");
         $row = 5;
         $number = 1;

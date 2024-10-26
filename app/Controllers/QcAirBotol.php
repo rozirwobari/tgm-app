@@ -423,7 +423,7 @@ class QcAirBotol extends BaseController
     function QCAirBotolExport()
     {
         $data = $this->QCModel->findAll();
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(FCPATH . 'data/public/asset/excel/qc_air_template.xlsx');
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('asset/excel/qc_air_template.xlsx');
         $sheet = $spreadsheet->getActiveSheet()->setTitle("QC Air Botol");
         $row = 5;
         $number = 1;

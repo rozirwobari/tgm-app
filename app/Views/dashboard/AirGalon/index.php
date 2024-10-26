@@ -46,9 +46,32 @@
         <a href="<?= base_url('/dashboard/qc_air_galon/detail/' . $value['id']) ?>">
             <div class="card-body">
                 <p class="fw-bold"><?= json_decode($value['date'])->label ?> [<span style="color: <?= $value['status'] == 0 ? '#c6a200' : ($value['status'] == 1 ? 'green' : 'red') ?>"><?= $value['status'] == 0 ? 'Pending' : ($value['status'] == 1 ? 'Approve' : 'Reject') ?></span>]</p>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus voluptate velit sunt quod ducimus!
-                    A ipsa nobis, excepturi quis labore modi alias laborum quae inventore praesentium similique est
-                    reiciendis obcaecati!</p>
+                <table style="font-size: 0.8em;">
+                    <tr>
+                        <th style="text-align: center;">Index</th>
+                        <th style="text-align: center;">Warna</th>
+                        <th style="text-align: center;">Status</th>
+                        <th style="text-align: center;">Keterangan</th>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">A</td>
+                        <td style="background-color: green; text-align: center; color: white;">Hijau</td>
+                        <td>LOLOS</td>
+                        <td>Produk/ bahan kualitas baik sesuai standar</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; text-align: center;">B</td>
+                        <td style="background-color: yellow;">Kuning</td>
+                        <td>LOLOS</td>
+                        <td>Produk/ bahan pada kondisi kurang baik namun masih sesuai standar atau masih di toleransi</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">C</td>
+                        <td style="background-color: red; text-align: center; color: white;">Merah</td>
+                        <td>RIJECT</td>
+                        <td>Produk kondisi tidak baik, tidak sesuai standar</td>
+                    </tr>
+                </table>
             </div>
         </a>
     </div>
