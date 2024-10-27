@@ -495,17 +495,11 @@ class QcAirBotol extends BaseController
                 $sheet->setCellValue($RASAColumns[$index] . $row, $rasaValue);
                 $sheet->getStyle($RASAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($rasaValue !== null && $rasaValue !== '') {
-                    if ($rasaValue == "normal") {
+                    if (strpos(strtolower($rasaValue), 'normal') === 0) {
                         $sheet->getStyle($RASAColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '00FF00']]]);
-                    } elseif ($rasaValue == "pahit") {
-                        $sheet->getStyle($RASAColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FFFF00']]]);
                     } else {
-                        $sheet->setCellValue($RASAColumns[$index] . $row, "-");
                         $sheet->getStyle($RASAColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FF0000']]]);
                     }
-                } else {
-                    $sheet->setCellValue($RASAColumns[$index] . $row, "-");
-                    $sheet->getStyle($RASAColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FF0000']]]);
                 }
             }
 
@@ -515,10 +509,8 @@ class QcAirBotol extends BaseController
                 $sheet->setCellValue($AROMAColumns[$index] . $row, $rasaValue);
                 $sheet->getStyle($AROMAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($rasaValue !== null && $rasaValue !== '') {
-                    if ($aromaValue <= 1.0) {
+                    if (strpos(strtolower($aromaValue), 'normal') === 0) {
                         $sheet->getStyle($AROMAColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '00FF00']]]);
-                    } elseif ($aromaValue >= 1.1 && $aromaValue <= 1.5) {
-                        $sheet->getStyle($AROMAColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FFFF00']]]);
                     } else {
                         $sheet->getStyle($AROMAColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FF0000']]]);
                     }
@@ -531,10 +523,8 @@ class QcAirBotol extends BaseController
                 $sheet->setCellValue($WARNAColumns[$index] . $row, $warnaValue);
                 $sheet->getStyle($WARNAColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($warnaValue !== null && $warnaValue !== '') {
-                    if ($warnaValue <= 1.0) {
+                    if (strpos(strtolower($warnaValue), 'normal') === 0) {
                         $sheet->getStyle($WARNAColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '00FF00']]]);
-                    } elseif ($warnaValue >= 1.1 && $warnaValue <= 1.5) {
-                        $sheet->getStyle($WARNAColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FFFF00']]]);
                     } else {
                         $sheet->getStyle($WARNAColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FF0000']]]);
                     }

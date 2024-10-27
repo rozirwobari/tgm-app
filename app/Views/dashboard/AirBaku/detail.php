@@ -25,21 +25,21 @@
             <h3 class="text-center">Keterangan Fisikokimia</h3>
             <div style="display: flex; flex-direction: row;">
                 <p style="margin-right: 10px;">TDS : </p>
-                <span class="rzw-keterangan-green">0-5</span>
-                <span class="rzw-keterangan-yellow">6-10</span>
-                <span class="rzw-keterangan-red">10&lt;</span>
+                <span class="rzw-keterangan-green">0-130</span>
+                <span class="rzw-keterangan-yellow">130-150</span>
+                <span class="rzw-keterangan-red">150&lt;</span>
             </div>
             <div style="display: flex; flex-direction: row;" class="mt-2">
                 <p style="margin-right: 10px;">PH : </p>
-                <span class="rzw-keterangan-green">5.0-7.0</span>
-                <span class="rzw-keterangan-yellow">7.1-7.5</span>
-                <span class="rzw-keterangan-red">7.5&lt; </span>
+                <span class="rzw-keterangan-green">6.5-7.5</span>
+                <span class="rzw-keterangan-yellow">7.5-8.5</span>
+                <span class="rzw-keterangan-red">8.5&lt;</span>
             </div>
             <div style="display: flex; flex-direction: row;" class="mt-2">
                 <p style="margin-right: 10px;">KERUHAN : </p>
-                <span class="rzw-keterangan-green">0-1.0</span>
-                <span class="rzw-keterangan-yellow">1.1-1.5</span>
-                <span class="rzw-keterangan-red">1.5&lt;</span>
+                <span class="rzw-keterangan-green">0.0-2.0</span>
+                <span class="rzw-keterangan-yellow">2.1-5.0</span>
+                <span class="rzw-keterangan-red">5.1&lt;</span>
             </div>
         </div>
     </div>
@@ -48,7 +48,7 @@
 <div class="rzw-box-content">
     <div class="card-body">
         <div class="container text-start">
-            <h3 class="text-center">Keterangan</h3>
+            <h3 class="text-center">Keterangan Organoleptik</h3>
             <div style="display: flex; flex-direction: row;">
                 <p style="margin-right: 10px;">RASA : </p>
                 <span class="rzw-keterangan-green">Normal</span>
@@ -74,7 +74,7 @@
 <div class="rzw-box-content">
     <div class="card-body">
         <div class="container text-start">
-            <h3 class="text-center">Keterangan</h3>
+            <h3 class="text-center">Keterangan Mikrobiologi</h3>
             <div style="display: flex; flex-direction: row;">
                 <p style="margin-right: 10px;">RASA : </p>
                 <span class="rzw-keterangan-green">
@@ -294,15 +294,11 @@
                     $data = $decode_qc->organoleptik[($i - 1)]->rasa;
             ?>
             <div class="input-group my-3">
-                <select class="form-control rzw-input <?= session('input.rasa_input_'.$i) ? 'is-invalid' : '' ?>"
-                    name="rasa_input_<?= $i ?>" id="rasa_input_<?= $i ?>"
-                    style="background-color: <?= $data == null ? 'white' : ($data == 'Normal' ? 'green' : ($data == 'Pahit' ? 'yellow' : 'red')) ?>; color: <?= $data == null ? 'black' : ($data == 'Normal' ? 'white' : ($data == 'Pahit' ? 'black' : 'white')) ?>;"
+                <input type="text" class="form-control rzw-input <?= session('input.rasa_input_'.$i) ? 'is-invalid' : '' ?>"
+                    name="rasa_input_<?= $i ?>" id="rasa_input_<?= $i ?>" placeholder="Value <?= $i ?>"
+                    value="<?= $data ?>"
+                    style="background-color: <?= strpos(strtolower($data), 'normal') === 0 ? 'green' : ($data == null ? 'white' : 'red') ?>; color: <?= $data == null ? 'black' : 'white' ?>;"
                     <?= $status == 0 && $details['user_id'] == $data_user['user_id'] && $data_user['name'] != 'viewers' ? '' : 'readonly' ?>>
-                    <option value="">Pilih Rasa</option>
-                    <option value="Normal" <?= $data == 'Normal' ? 'selected' : '' ?>>Normal</option>
-                    <option value="Pahit" <?= $data == 'Pahit' ? 'selected' : '' ?>>Pahit</option>
-                    <option value="Merah" <?= $data == 'Merah' ? 'selected' : '' ?>>-</option>
-                </select>
                 <div class="input-group-prepend">
                     <span class="rzw-icon-input" style="z-index: 5;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -339,7 +335,7 @@
                     class="form-control rzw-input <?= session('input.aroma_input_'.$i) ? 'is-invalid' : '' ?>"
                     name="aroma_input_<?= $i ?>" id="aroma_input_<?= $i ?>" placeholder="Value <?= $i ?>"
                     value="<?= $data ?>"
-                    style="background-color: <?= $data == null ? 'white' : ($data >= 5.0 && $data <= 7.0 ? 'green' : ($data >= 7.1 && $data <= 7.5 ? '#ecd700' : '#ff0000')) ?>; color: <?= $data == null ? 'black' : ($data >= 5.0 && $data <= 7.0 ? 'white' : ($data >= 7.1 && $data <= 7.5 ? 'black' : 'white')) ?>;"
+                    style="background-color: <?= strpos(strtolower($data), 'normal') === 0 ? 'green' : ($data == null ? 'white' : 'red') ?>; color: <?= $data == null ? 'black' : 'white' ?>;"
                     <?= $status == 0 && $details['user_id'] == $data_user['user_id'] && $data_user['name'] != 'viewers' ? '' : 'readonly' ?>>
                 <div class="input-group-prepend">
                     <span class="rzw-icon-input" style="z-index: 5;">
@@ -377,7 +373,7 @@
                     class="form-control rzw-input <?= session('input.warna_input_'.$i) ? 'is-invalid' : '' ?>"
                     name="warna_input_<?= $i ?>" id="warna_input_<?= $i ?>" placeholder="Value <?= $i ?>"
                     value="<?= $data ?>"
-                    style="background-color: <?= $data == null ? 'white' : ($data >= 0 && $data <= 1.0 ? 'green' : ($data >= 1.1 && $data <= 1.5 ? '#ecd700' : '#ff0000')) ?>; color: <?= $data == null ? 'black' : ($data >= 0 && $data <= 1.0 ? 'white' : ($data >= 1.1 && $data <= 1.5 ? 'black' : 'white')) ?>;"
+                    style="background-color: <?= strpos(strtolower($data), 'normal') === 0 ? 'green' : ($data == null ? 'white' : 'red') ?>; color: <?= $data == null ? 'black' : 'white' ?>;"
                     <?= $status == 0 && $details['user_id'] == $data_user['user_id'] && $data_user['name'] != 'viewers' ? '' : 'readonly' ?>>
                 <div class="input-group-prepend">
                     <span class="rzw-icon-input" style="z-index: 5;">

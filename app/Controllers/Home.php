@@ -8,6 +8,9 @@ use App\Models\QcAirGalonModel;
 use App\Models\QcAirCupModel;
 use App\Models\RoleModel;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Home extends BaseController
 {
     protected $session;
@@ -336,11 +339,11 @@ class Home extends BaseController
 
 
         // QC Air Galon
-        $data = $this->QcAirGalonModel->findAll();
+        $dataAirGalon = $this->QcAirGalonModel->findAll();
         $sheet3 = $spreadsheet->getSheetByName("QC Air Galon");
         $row = 5;
         $number = 1;
-        foreach ($data as $item) {
+        foreach ($dataAirGalon as $item) {
 
             $dataUser = $this->AuthModel->find($item['user_id']);
             $date = json_decode($item['date']);
@@ -507,11 +510,11 @@ class Home extends BaseController
 
 
         // QC Air Cup
-        $data = $this->QcAirCupModel->findAll();
+        $dataQcAirCupModel = $this->QcAirCupModel->findAll();
         $sheet2 = $spreadsheet->getSheetByName("QC Air Cup");
         $row = 5;
         $number = 1;
-        foreach ($data as $item) {
+        foreach ($dataQcAirCupModel as $item) {
 
             $dataUser = $this->AuthModel->find($item['user_id']);
             $date = json_decode($item['date']);
@@ -678,11 +681,11 @@ class Home extends BaseController
 
 
         // QC Air Baku
-        $data = $this->QcAirBakuModel->findAll();
+        $dataQcAirBakuModel = $this->QcAirBakuModel->findAll();
         $sheet2 = $spreadsheet->getSheetByName("QC Air Baku");
         $row = 5;
         $number = 1;
-        foreach ($data as $item) {
+        foreach ($dataQcAirBakuModel as $item) {
 
             $dataUser = $this->AuthModel->find($item['user_id']);
             $date = json_decode($item['date']);
@@ -854,5 +857,121 @@ class Home extends BaseController
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
         $writer->save('php://output');
+        exit;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function exportAllToExcel()
+    {
+        // Buat instance Spreadsheet
+        $spreadsheet = new Spreadsheet();
+
+        // Ambil data dari controller lain
+        $qcAirBakuController = new QCAirBaku();
+        $dataBaku = $qcAirBakuController->QCAirExport();  // Sesuaikan nama method jika ada perubahan
+
+        $qcAirBotolController = new QCAirBotol();
+        $dataBotol = $qcAirBotolController->QCAirBotolExport();
+
+        $qcAirCupController = new QCAirCup();
+        $dataCup = $qcAirCupController->QCAirExport();
+
+        $qcAirGalonController = new QCAirGalon();
+        $dataGalon = $qcAirGalonController->QCAirExport();
+
+        // Sheet 1: QCAirBaku
+        $sheet1 = $spreadsheet->setActiveSheetIndex(0);
+        $sheet1->setTitle("QCAirBaku");
+        $this->fillSheetWithData($sheet1, $dataBaku);
+
+        // Sheet 2: QCAirBotol
+        $spreadsheet->createSheet();
+        $sheet2 = $spreadsheet->setActiveSheetIndex(1);
+        $sheet2->setTitle("QCAirBotol");
+        $this->fillSheetWithData($sheet2, $dataBotol);
+
+        // Sheet 3: QCAirCup
+        $spreadsheet->createSheet();
+        $sheet3 = $spreadsheet->setActiveSheetIndex(2);
+        $sheet3->setTitle("QCAirCup");
+        $this->fillSheetWithData($sheet3, $dataCup);
+
+        // Sheet 4: QCAirGalon
+        $spreadsheet->createSheet();
+        $sheet4 = $spreadsheet->setActiveSheetIndex(3);
+        $sheet4->setTitle("QCAirGalon");
+        $this->fillSheetWithData($sheet4, $dataGalon);
+
+        // Kembali ke sheet pertama sebagai default
+        $spreadsheet->setActiveSheetIndex(0);
+
+        // Simpan file
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'QCAir_Combined_Report.xlsx';
+
+        // Set headers untuk file download
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $fileName . '"');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+        exit;
+    }
+
+    private function fillSheetWithData($sheet, $data)
+    {
+        // Contoh pengisian data di setiap sheet
+        $row = 1;
+        foreach ($data as $dataRow) {
+            $col = 'A';
+            foreach ($dataRow as $cellValue) {
+                $sheet->setCellValue($col . $row, $cellValue);
+                $col++;
+            }
+            $row++;
+        }
     }
 }

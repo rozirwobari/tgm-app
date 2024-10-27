@@ -292,15 +292,11 @@
                     $data = $decode_qc->organoleptik[($i - 1)]->rasa;
             ?>
             <div class="input-group my-3">
-                <select class="form-control rzw-input <?= session('input.rasa_input_'.$i) ? 'is-invalid' : '' ?>"
-                    name="rasa_input_<?= $i ?>" id="rasa_input_<?= $i ?>"
-                    style="background-color: <?= $data == null ? 'white' : ($data == 'Normal' ? 'green' : ($data == 'Pahit' ? 'yellow' : 'red')) ?>; color: <?= $data == null ? 'black' : ($data == 'Normal' ? 'white' : ($data == 'Pahit' ? 'black' : 'white')) ?>;"
+                <input type="text" class="form-control rzw-input <?= session('input.rasa_input_'.$i) ? 'is-invalid' : '' ?>"
+                    name="rasa_input_<?= $i ?>" id="rasa_input_<?= $i ?>" placeholder="Value <?= $i ?>"
+                    value="<?= $data ?>"
+                    style="background-color: <?= strpos(strtolower($data), 'normal') === 0 ? 'green' : ($data == null ? 'white' : 'red') ?>; color: <?= $data == null ? 'black' : 'white' ?>;"
                     <?= $status == 0 && $details['user_id'] == $data_user['user_id'] && $data_user['name'] != 'viewers' ? '' : 'readonly' ?>>
-                    <option value="">Pilih Rasa</option>
-                    <option value="Normal" <?= $data == 'Normal' ? 'selected' : '' ?>>Normal</option>
-                    <option value="Pahit" <?= $data == 'Pahit' ? 'selected' : '' ?>>Pahit</option>
-                    <option value="Merah" <?= $data == 'Merah' ? 'selected' : '' ?>>-</option>
-                </select>
                 <div class="input-group-prepend">
                     <span class="rzw-icon-input" style="z-index: 5;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -337,7 +333,7 @@
                     class="form-control rzw-input <?= session('input.aroma_input_'.$i) ? 'is-invalid' : '' ?>"
                     name="aroma_input_<?= $i ?>" id="aroma_input_<?= $i ?>" placeholder="Value <?= $i ?>"
                     value="<?= $data ?>"
-                    style="background-color: <?= $data == null ? 'white' : ($data >= 5.0 && $data <= 7.0 ? 'green' : ($data >= 7.1 && $data <= 7.5 ? '#ecd700' : '#ff0000')) ?>; color: <?= $data == null ? 'black' : ($data >= 5.0 && $data <= 7.0 ? 'white' : ($data >= 7.1 && $data <= 7.5 ? 'black' : 'white')) ?>;"
+                    style="background-color: <?= strpos(strtolower($data), 'normal') === 0 ? 'green' : ($data == null ? 'white' : 'red') ?>; color: <?= $data == null ? 'black' : 'white' ?>;"
                     <?= $status == 0 && $details['user_id'] == $data_user['user_id'] && $data_user['name'] != 'viewers' ? '' : 'readonly' ?>>
                 <div class="input-group-prepend">
                     <span class="rzw-icon-input" style="z-index: 5;">
@@ -375,7 +371,7 @@
                     class="form-control rzw-input <?= session('input.warna_input_'.$i) ? 'is-invalid' : '' ?>"
                     name="warna_input_<?= $i ?>" id="warna_input_<?= $i ?>" placeholder="Value <?= $i ?>"
                     value="<?= $data ?>"
-                    style="background-color: <?= $data == null ? 'white' : ($data >= 0 && $data <= 1.0 ? 'green' : ($data >= 1.1 && $data <= 1.5 ? '#ecd700' : '#ff0000')) ?>; color: <?= $data == null ? 'black' : ($data >= 0 && $data <= 1.0 ? 'white' : ($data >= 1.1 && $data <= 1.5 ? 'black' : 'white')) ?>;"
+                    style="background-color: <?= strpos(strtolower($data), 'normal') === 0 ? 'green' : ($data == null ? 'white' : 'red') ?>; color: <?= $data == null ? 'black' : 'white' ?>;"
                     <?= $status == 0 && $details['user_id'] == $data_user['user_id'] && $data_user['name'] != 'viewers' ? '' : 'readonly' ?>>
                 <div class="input-group-prepend">
                     <span class="rzw-icon-input" style="z-index: 5;">
