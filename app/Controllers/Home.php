@@ -156,13 +156,13 @@ class Home extends BaseController
 
     public function ExportAllExcel()
     {
-        if (!$this->session->get('isLoggedIn')) {
-            return redirect()->to(base_url('/'))->with('alert', [
-                'type' => 'warning',
-                'message' => 'Anda harus login terlebih dahulu!',
-                'title' => 'Permission Denied',
-            ]);
-        }
+        // if (!$this->session->get('isLoggedIn')) {
+        //     return redirect()->to(base_url('/'))->with('alert', [
+        //         'type' => 'warning',
+        //         'message' => 'Anda harus login terlebih dahulu!',
+        //         'title' => 'Permission Denied',
+        //     ]);
+        // }
         // $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('asset/excel/qc_air_all_template.xlsx');
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('asset/excel/qc_air_all_template.xlsx');
         
