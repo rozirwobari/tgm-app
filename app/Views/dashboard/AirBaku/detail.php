@@ -179,7 +179,7 @@
                     class="form-control rzw-input <?= session('input.tds_input_'.$i) ? 'is-invalid' : '' ?>"
                     name="tds_input_<?= $i ?>" id="tds_input_<?= $i ?>" placeholder="Value <?= $i ?>"
                     value="<?= $data ?>"
-                    style="background-color: <?= $data == null ? 'white' : ($data >= 0 && $data <= 5 ? 'green' : ($data >= 6 && $data <= 10 ? '#ecd700' : '#ff0000')) ?>; color: <?= $data == null ? 'black' : ($data >= 0 && $data <= 5 ? 'white' : ($data >= 6 && $data <= 10 ? 'black' : 'white')) ?>;"
+                    style="background-color: <?= $data == null ? 'white' : ($data >= 0 && $data <= 130 ? 'green' : ($data > 130 && $data <= 150 ? '#ecd700' : '#ff0000')) ?>; color: <?= $data == null ? 'black' : ($data >= 0 && $data <= 130 ? 'white' : ($data > 130 && $data <= 150 ? 'black' : 'white')) ?>;"
                     <?= $status == 0 && $details['user_id'] == $data_user['user_id'] && $data_user['name'] != 'viewers' ? '' : 'readonly' ?>>
                 <div class="input-group-prepend">
                     <span class="rzw-icon-input" style="z-index: 5;">
@@ -218,7 +218,7 @@
                     class="form-control rzw-input <?= session('input.ph_input_'.$i) ? 'is-invalid' : '' ?>"
                     name="ph_input_<?= $i ?>" id="ph_input_<?= $i ?>" placeholder="Value <?= $i ?>"
                     value="<?= $data ?>"
-                    style="background-color: <?= $data == null ? 'white' : ($data >= 5.0 && $data <= 7.0 ? 'green' : ($data >= 7.1 && $data <= 7.5 ? '#ecd700' : '#ff0000')) ?>; color: <?= $data == null ? 'black' : ($data >= 5.0 && $data <= 7.0 ? 'white' : ($data >= 7.1 && $data <= 7.5 ? 'black' : 'white')) ?>;"
+                    style="background-color: <?= $data == null ? 'white' : ($data >= 6.5 && $data <= 7.5 ? 'green' : ($data > 7.5 && $data <= 8.5 ? '#ecd700' : '#ff0000')) ?>; color: <?= $data == null ? 'black' : ($data >= 6.5 && $data <= 7.5 ? 'white' : ($data > 7.5 && $data <= 8.5 ? 'black' : 'white')) ?>;"
                     <?= $status == 0 && $details['user_id'] == $data_user['user_id'] && $data_user['name'] != 'viewers' ? '' : 'readonly' ?>>
                 <div class="input-group-prepend">
                     <span class="rzw-icon-input" style="z-index: 5;">
@@ -256,7 +256,7 @@
                     class="form-control rzw-input <?= session('input.keruhan_input_'.$i) ? 'is-invalid' : '' ?>"
                     name="keruhan_input_<?= $i ?>" id="keruhan_input_<?= $i ?>" placeholder="Value <?= $i ?>"
                     value="<?= $data ?>"
-                    style="background-color: <?= $data == null ? 'white' : ($data >= 0 && $data <= 1.0 ? 'green' : ($data >= 1.1 && $data <= 1.5 ? '#ecd700' : '#ff0000')) ?>; color: <?= $data == null ? 'black' : ($data >= 0 && $data <= 1.0 ? 'white' : ($data >= 1.1 && $data <= 1.5 ? 'black' : 'white')) ?>;"
+                    style="background-color: <?= $data == null ? 'white' : ($data >= 0 && $data <= 2.0 ? 'green' : ($data >= 2.1 && $data <= 5.0 ? '#ecd700' : '#ff0000')) ?>; color: <?= $data == null ? 'black' : ($data >= 0 && $data <= 2.0 ? 'white' : ($data >= 2.1 && $data <= 5.0 ? 'black' : 'white')) ?>;"
                     <?= $status == 0 && $details['user_id'] == $data_user['user_id'] && $data_user['name'] != 'viewers' ? '' : 'readonly' ?>>
                 <div class="input-group-prepend">
                     <span class="rzw-icon-input" style="z-index: 5;">

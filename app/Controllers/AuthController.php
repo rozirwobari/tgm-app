@@ -165,7 +165,7 @@ class AuthController extends BaseController
         $email->setTo($user['email']);
         $email->setSubject('Reset Password');
         $email->setMessage(view('auth/reset_password_template', ['token' => $token]));
-        $email->setFrom('forgot-password@rozirwobar.my.id', 'RZW Reset Password');
+        $email->setFrom('reset-password@rozirwobari.my.id', 'Reset Password');
 
         if ($email->send()) {
             return redirect()->to(base_url('/'))->with('alert', [

@@ -385,9 +385,9 @@ class QcAirBaku extends BaseController
                 $sheet->setCellValue($TDSColumns[$index] . $row, $tdsValue);
                 $sheet->getStyle($TDSColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($tdsValue !== null && $tdsValue !== '') {
-                    if ($tdsValue >= 0 && $tdsValue <= 5) {
+                    if ($tdsValue >= 0 && $tdsValue <= 130) {
                         $sheet->getStyle($TDSColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '00FF00']]]);
-                    } elseif ($tdsValue >= 6 && $tdsValue <= 10) {
+                    } elseif ($tdsValue > 130 && $tdsValue <= 150) {
                         $sheet->getStyle($TDSColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FFFF00']]]);
                     } else {
                         $sheet->getStyle($TDSColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FF0000']]]);
@@ -401,9 +401,9 @@ class QcAirBaku extends BaseController
                 $sheet->setCellValue($PHColumns[$index] . $row, $phValue);
                 $sheet->getStyle($PHColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($phValue !== null && $phValue !== '') {
-                    if ($phValue >= 5.0 && $phValue <= 7.0) {
+                    if ($phValue >= 6.5 && $phValue <= 7.5) {
                         $sheet->getStyle($PHColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '00FF00']]]);
-                    } elseif ($phValue >= 7.1 && $phValue <= 7.5) {
+                    } elseif ($phValue >= 7.6 && $phValue <= 8.5) {
                         $sheet->getStyle($PHColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FFFF00']]]);
                     } else {
                         $sheet->getStyle($PHColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FF0000']]]);
@@ -417,9 +417,9 @@ class QcAirBaku extends BaseController
                 $sheet->setCellValue($KERUHANColumns[$index] . $row, $keruhanValue);
                 $sheet->getStyle($KERUHANColumns[$index] . $row)->applyFromArray(['borders' => ['outline' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, 'color' => ['argb' => '00000000']]]]);
                 if ($keruhanValue !== null && $keruhanValue !== '') {
-                    if ($keruhanValue <= 1.0) {
+                    if ($keruhanValue >= 0.0 && $keruhanValue <= 2.0) {
                         $sheet->getStyle($KERUHANColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '00FF00']]]);
-                    } elseif ($keruhanValue >= 1.1 && $keruhanValue <= 1.5) {
+                    } elseif ($keruhanValue >= 2.1 && $keruhanValue <= 5.0) {
                         $sheet->getStyle($KERUHANColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FFFF00']]]);
                     } else {
                         $sheet->getStyle($KERUHANColumns[$index] . $row)->applyFromArray(['fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FF0000']]]);
