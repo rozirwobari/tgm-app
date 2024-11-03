@@ -23,6 +23,8 @@ $routes->post('/save_account', 'Home::ManageAccountSave');
 
 $routes->group('dashboard', function($routes) {
     $routes->get('/', 'Home::index');
+    $routes->get('profile', 'Profile::index');
+    $routes->post('profile', 'Profile::saveprofile');
     $routes->group('qc_air_botol', function($routes) {
         $routes->get('/', 'QcAirBotol::index');
         $routes->get('input', 'QcAirBotol::input');
