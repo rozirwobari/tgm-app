@@ -21,18 +21,18 @@ class QcAirGalon extends Migration
                 'null'       => true,
             ],
             'date' => [
-                'type'       => 'LONGTEXT',
+                'type'       => 'JSON',
                 'null'       => true,
-                'constraint' => 'json',
+                
             ],
             'update_date' => [
                 'type'       => 'LONGTEXT',
                 'null'       => true,
             ],
             'data' => [
-                'type'       => 'LONGTEXT',
+                'type'       => 'JSON',
                 'null'       => true,
-                'constraint' => 'json',
+                
             ],
             'status' => [
                 'type'       => 'INT',
