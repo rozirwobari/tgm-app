@@ -8,6 +8,9 @@ use App\Models\AuthModel;
 use App\Models\QcAirBakuModel;
 use App\Models\RoleModel;
 
+use Google\Client;
+use Google\Service\Sheets;
+
 class QcAirBaku extends BaseController
 {
     public function __construct()
@@ -17,6 +20,8 @@ class QcAirBaku extends BaseController
         $this->AuthModel = new AuthModel();
         $this->QCModel = new QcAirBakuModel();
         $this->RoleModel = new RoleModel();
+        $this->SheetID = "1GLCOL_RvBhWAB4g6hPlcBDiKmu3-iyHUMXYOkH9jfRM";
+        $this->serviceAccountFile = 'asset/credentials/service-account.json';
     }
 
     public function getLabelTime()
@@ -343,19 +348,268 @@ class QcAirBaku extends BaseController
         ]);
     }
 
+    private function checkValue($range)
+    {
+        $credentialsPath = "asset/credentials/service-account.json";
+        $client = new Client();
+        $client->setApplicationName('Google Sheets API');
+        $client->setScopes([Sheets::SPREADSHEETS]);
+        $client->setAuthConfig($credentialsPath);
+        $service = new Sheets($client);
+
+        // Membaca nilai dari range
+        $response = $service->spreadsheets_values->get($this->SheetID, $range);
+        $values = $response->getValues();
+
+        if (empty($values)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    private function CheckedSheet($SheetName)
+    {
+        $found = false;
+        $client = new Client();
+        $client->setAuthConfig($this->serviceAccountFile);
+        $client->addScope(Sheets::SPREADSHEETS);
+        $service = new Sheets($client);
+        $response = $service->spreadsheets->get($this->SheetID);
+        $sheets = $response->getSheets();
+        foreach ($sheets as $sheet) {
+            if ($sheet->getProperties()->getTitle() == $SheetName) {
+                $found = true;
+                break;
+            }
+        }
+        
+        if ($found) {
+            return true;	
+        } else {
+            return false;
+        }
+    }
+
+
+    private function DuplicateSheet($sheetName)
+    {
+        $client = new Client();
+        $client->setAuthConfig($this->serviceAccountFile);
+        $client->addScope(Sheets::SPREADSHEETS);
+        $service = new Sheets($client);
+        $spreadsheet = $service->spreadsheets->get($this->SheetID);
+        $sheets = $spreadsheet->getSheets();
+        $templateSheetId = null;
+        foreach ($sheets as $sheet) {
+            if ($sheet->getProperties()->getTitle() === 'template') {
+                $templateSheetId = $sheet->getProperties()->getSheetId();
+                break;
+            }
+        }
+    
+        if ($templateSheetId === null) {
+            throw new Exception("Sheet 'template' tidak ditemukan.");
+        }
+        $duplicateRequest = new \Google\Service\Sheets\Request([
+            'duplicateSheet' => [
+                'sourceSheetId' => $templateSheetId,
+                'insertSheetIndex' => 0,
+                'newSheetName' => 'temp',
+            ],
+        ]);
+    
+        $body = new \Google\Service\Sheets\BatchUpdateSpreadsheetRequest([
+            'requests' => [$duplicateRequest],
+        ]);
+    
+        $response = $service->spreadsheets->batchUpdate($this->SheetID, $body);
+        $sheetId = $response->getReplies()[0]->getDuplicateSheet()->getProperties()->getSheetId();
+        $updateRequest = new \Google\Service\Sheets\Request([
+            'updateSheetProperties' => [
+                'properties' => [
+                    'sheetId' => $sheetId,
+                    'title' => $sheetName,
+                ],
+                'fields' => 'title',
+            ],
+        ]);
+    
+        $updateBody = new \Google\Service\Sheets\BatchUpdateSpreadsheetRequest([
+            'requests' => [$updateRequest],
+        ]);
+    
+        $service->spreadsheets->batchUpdate($this->SheetID, $updateBody);
+    }
+
     function QCAirApprove($id)
     {
-        $data = [
-            'status' => '1',
-        ];
+        $data = $this->QCModel->find($id);
+        $dataUser = $this->AuthModel->find($data['user_id']);
+        $QCData = json_decode($data['data'])->data;
+        
+        try {
+            $sheetName = date('F Y', time());
+            
+            $client = new Client();
+            $client->setAuthConfig($this->serviceAccountFile);
+            $client->addScope(Sheets::SPREADSHEETS);
+            $service = new Sheets($client);
+            $range = '';
+            $index = 0;
 
-        $this->QCModel->update($id, $data);
+            if (!$this->CheckedSheet($sheetName)) {
+                $this->DuplicateSheet($sheetName);
+            }
 
-        return redirect()->to(base_url('dashboard/qc_air_baku'))->with('alert', [
-            'type' => 'success',
-            'message' => 'Data berhasil disetujui.',
-            'title' => 'Data Disetujui',
-        ]);
+            // Checked Range
+            for ($i=5; $i <= 500; $i++) {
+                $rangess = $sheetName.'!A'.$i;
+                if ($this->checkValue($rangess)) {
+                    $range = $rangess;
+                    $index = $i;
+                    break;
+                }
+            }
+
+
+            $nomor = $index - 4;
+            $tgljam = json_decode($data['date']);
+            $range = $sheetName.'!A'.$index;
+            $dataPetugas = [
+                [$nomor, $tgljam->label, $data['shift'], $dataUser['nama']],
+            ];
+            $body = new \Google\Service\Sheets\ValueRange([
+                'values' => $dataPetugas,
+            ]);
+            $params = ['valueInputOption' => 'RAW'];
+            $service->spreadsheets_values->update($this->SheetID, $range, $body, $params);
+
+
+            
+            $range = $sheetName.'!AN'.$index;
+            $dataPetugas = [
+                ["Approval"],
+            ];
+            $body = new \Google\Service\Sheets\ValueRange([
+                'values' => $dataPetugas,
+            ]);
+            $params = ['valueInputOption' => 'RAW'];
+            $service->spreadsheets_values->update($this->SheetID, $range, $body, $params);
+
+            
+            $column = ['E', 'F', 'G', 'H', 'I'];
+            foreach ($column as $keys => $item) {
+                $dataSheet = [];
+                $dataSheet[] = $QCData->fisikokimia[$keys]->tds;
+                $range = $sheetName.'!'.$item.$index;
+                $body = new \Google\Service\Sheets\ValueRange([
+                    'values' => [$dataSheet],
+                ]);
+                $params = ['valueInputOption' => 'RAW'];
+                $service->spreadsheets_values->update($this->SheetID, $range, $body, $params);
+            }
+
+
+            $column = ['J', 'K', 'L', 'M', 'N'];
+            foreach ($column as $keys => $item) {
+                $dataSheet = [];
+                $dataSheet[] = $QCData->fisikokimia[$keys]->ph;
+                $range = $sheetName.'!'.$item.$index;
+                $body = new \Google\Service\Sheets\ValueRange([
+                    'values' => [$dataSheet],
+                ]);
+                $params = ['valueInputOption' => 'RAW'];
+                $service->spreadsheets_values->update($this->SheetID, $range, $body, $params);
+            }
+
+            $column = ['O', 'P', 'Q', 'R', 'S'];
+            foreach ($column as $keys => $item) {
+                $dataSheet = [];
+                $dataSheet[] = $QCData->fisikokimia[$keys]->keruhan;
+                $range = $sheetName.'!'.$item.$index;
+                $body = new \Google\Service\Sheets\ValueRange([
+                    'values' => [$dataSheet],
+                ]);
+                $params = ['valueInputOption' => 'RAW'];
+                $service->spreadsheets_values->update($this->SheetID, $range, $body, $params);
+            }
+
+            $column = ['T', 'U', 'V', 'W', 'X'];
+            foreach ($column as $keys => $item) {
+                $dataSheet = [];
+                $dataSheet[] = $QCData->organoleptik[$keys]->rasa;
+                $range = $sheetName.'!'.$item.$index;
+                $body = new \Google\Service\Sheets\ValueRange([
+                    'values' => [$dataSheet],
+                ]);
+                $params = ['valueInputOption' => 'RAW'];
+                $service->spreadsheets_values->update($this->SheetID, $range, $body, $params);
+            }
+            
+            $column = ['Y', 'Z', 'AA', 'AB', 'AC'];
+            foreach ($column as $keys => $item) {
+                $dataSheet = [];
+                $dataSheet[] = $QCData->organoleptik[$keys]->aroma;
+                $range = $sheetName.'!'.$item.$index;
+                $body = new \Google\Service\Sheets\ValueRange([
+                    'values' => [$dataSheet],
+                ]);
+                $params = ['valueInputOption' => 'RAW'];
+                $service->spreadsheets_values->update($this->SheetID, $range, $body, $params);
+            }
+
+            $column = ['AD', 'AE', 'AF', 'AG', 'AH'];
+            foreach ($column as $keys => $item) {
+                $dataSheet = [];
+                $dataSheet[] = $QCData->organoleptik[$keys]->warna;
+                $range = $sheetName.'!'.$item.$index;
+                $body = new \Google\Service\Sheets\ValueRange([
+                    'values' => [$dataSheet],
+                ]);
+                $params = ['valueInputOption' => 'RAW'];
+                $service->spreadsheets_values->update($this->SheetID, $range, $body, $params);
+            }
+
+            $column = ['AI', 'AJ', 'AK'];
+            foreach ($column as $keys => $item) {
+                $dataSheet = [];
+                $dataSheet[] = $QCData->mikrobiologi[$keys]->alt;
+                $range = $sheetName.'!'.$item.$index;
+                $body = new \Google\Service\Sheets\ValueRange([
+                    'values' => [$dataSheet],
+                ]);
+                $params = ['valueInputOption' => 'RAW'];
+                $service->spreadsheets_values->update($this->SheetID, $range, $body, $params);
+            }
+
+            $column = ['AL', 'AM'];
+            foreach ($column as $keys => $item) {
+                $dataSheet = [];
+                $dataSheet[] = $QCData->mikrobiologi[$keys]->ec;
+                $range = $sheetName.'!'.$item.$index;
+                $body = new \Google\Service\Sheets\ValueRange([
+                    'values' => [$dataSheet],
+                ]);
+                $params = ['valueInputOption' => 'RAW'];
+                $service->spreadsheets_values->update($this->SheetID, $range, $body, $params);
+            }
+
+            $data = [
+                'status' => '1',
+            ];
+            $this->QCModel->update($id, $data);
+            return redirect()->to(base_url('/dashboard/qc_air_baku'))->with('alert', [
+                'type' => 'success',
+                'message' => 'Data berhasil disetujui.',
+                'title' => 'Data Disetujui',
+            ]);
+        } catch (Google_Service_Exception $e) {
+            dd('Google API Error: ' . $e->getMessage());
+        } catch (Exception $e) {
+            dd('General Error: ' . $e->getMessage());
+        }
     }
 
     function QCAirExport()

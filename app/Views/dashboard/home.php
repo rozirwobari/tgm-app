@@ -20,12 +20,14 @@
                 <a href="<?= base_url('/dashboard/qc_air_cup') ?>" class="btn btn-primary w-100 rzw-btn-content">QC
                     Air Cup</a>
             </div>
-            <div class="col-6 pt-3">
+            <div class="<?= $user['name'] != 'viewers' ? 'col-6' : 'col-12' ?> pt-3">
                 <a href="<?= base_url('/dashboard/qc_air_galon') ?>" class="btn btn-primary w-100 rzw-btn-content">QC Air Galon</a>
             </div>
+            <?php if($user['name'] != 'viewers'): ?>
             <div class="col-6 pt-3">
                 <a href="<?= base_url('/dashboard/qc_air_baku') ?>" class="btn btn-primary w-100 rzw-btn-content">QC Air Baku</a>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
